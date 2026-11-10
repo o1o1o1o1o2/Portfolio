@@ -1,0 +1,16 @@
+---
+import KineticLink from './KineticLink.astro';
+interface Props { base: string; }
+const { base } = Astro.props;
+const previews = [
+  {image:'eco.webp',name:'Eco Tycoon',className:'experience-eco'},
+  {image:'berserk.jpg',name:'Berserk Heroes Online',className:'experience-berserk'},
+  {image:'samedi.webp',name:'Samedi Manor',className:'experience-samedi'},
+];
+---
+<section class="experience-stage m-wrap" aria-labelledby="experience-title" data-intro-once data-intro-panel>
+  <div class="experience-meta"><span>UNITY / C# · GAME DEVELOPMENT</span><span>АРХИТЕКТУРА / UI / ИНСТРУМЕНТЫ</span></div>
+  <div class="experience-copy"><h2 id="experience-title" data-title="chars">Системы.<br/><em>Интерфейсы.<br/>Инструменты.<br/>Бэкенд.</em></h2><p>Battle Pass, арена, игровые события.<br/>Интеграции, оптимизация и инструменты для команды.</p><KineticLink label="Смотреть проекты" href="#games"/></div>
+  <div class="experience-collage" data-slide="right" aria-label="Кадры разных проектов">{previews.map(item=><figure class={item.className}><img src={`${base}/images/${item.image}`} alt={item.name} loading="eager" width="526" height="296"/><figcaption>{item.name}</figcaption></figure>)}<span class="experience-thesia">+ THESIA / ВИДЕОАРХИВ</span></div>
+  <span class="experience-footnote">КОММЕРЧЕСКИЙ ОПЫТ · ЛИЧНЫЙ ВКЛАД В РАБОТУ КОМАНДЫ</span>
+</section>

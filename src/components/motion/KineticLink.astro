@@ -1,0 +1,10 @@
+---
+interface Props { label: string; href?: string; caseId?: string; class?: string; external?: boolean; }
+const { label, href, caseId, class: className = '', external = false } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+<Tag class:list={['kinetic-link',className]} href={href} data-case={caseId} type={href ? undefined : 'button'} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} aria-label={label}>
+  <span class="kinetic-indicator" aria-hidden="true"><i></i><i></i></span>
+  <span class="kinetic-label" aria-hidden="true">{Array.from(label).map((char,index)=><span class:list={['kinetic-char',{'kinetic-space':char===' '}]} style={`--char:${index};--phase:${Math.sin(index*.7).toFixed(3)}`}><span>{char===' '?'\u00a0':char}</span><span>{char===' '?'\u00a0':char}</span></span>)}</span>
+  <span class="kinetic-arrow" aria-hidden="true">↗</span>
+</Tag>

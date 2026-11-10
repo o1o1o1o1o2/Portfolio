@@ -1,0 +1,11 @@
+---
+const stations=[
+ {kind:'water',label:'Вода',icon:'◉',x:10,y:15},
+ {kind:'beans',label:'Зёрна',icon:'☷',x:83,y:15},
+ {kind:'cv',label:'Резюме',icon:'CV',x:10,y:78},
+ {kind:'demo',label:'Демо',icon:'▶',x:83,y:78},
+ {kind:'sorter',label:'Сортировщик',icon:'⇥',x:44,y:54},
+ {kind:'terminal',label:'Приём',icon:'✓',x:62,y:54},
+];
+---
+<div class="hireops-preview"><div class="preview-header"><strong>HireOps<span> / Recruitment Factory</span></strong><small>ПРЕДПРОСМОТР · В РАЗРАБОТКЕ</small></div><div class="preview-field"><div class="preview-grid"></div>{stations.map(station=><div class:list={['preview-station',`station-${station.kind}`]} style={`left:${station.x}%;top:${station.y}%`}><span class="station-object">{station.icon}</span><small>{station.label}</small></div>)}<div class="field-hint">Сначала вручную.<br/>Потом — конвейеры.</div></div><div class="preview-toolbar"><span>01 — Ресурсы</span><span>02 — Лента</span><span>03 — Производство</span><small>Игровой прототип готовится</small></div></div>
