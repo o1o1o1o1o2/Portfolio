@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "locales": ["ru", "en"],
+  "sections": [
+    { "id": "games", "title": { "ru": "Игры", "en": "Games" } },
+    { "id": "backend", "title": { "ru": "Бэкенд", "en": "Backend" } },
+    { "id": "articles", "title": { "ru": "Статьи", "en": "Articles" } }
+  ],
+  "games": [
+    {
+      "id": "berserk-heroes-online",
+      "title": "Berserk Heroes Online",
+      "summary": {
+        "ru": "Коллекционная карточная игра. Разработка игровых систем, интерфейсов и инструментов.",
+        "en": "A collectible card game. Work on game systems, interfaces and development tools."
+      },
+      "contributions": [
+        { "ru": "Гибкая система UI для интеграции новых интерфейсов.", "en": "A flexible UI system for integrating new interfaces." },
+        { "ru": "Battle Pass, рейтинговая арена и игровые события.", "en": "Battle Pass, ranked arena and in-game events." },
+        { "ru": "Симулятор боёв с пользовательской статистикой для балансировки персонажей.", "en": "A battle simulator with custom statistics for character balancing." },
+        { "ru": "Интеграции аутентификации, платежей, рекламы и аналитики; работа с сетевой синхронизацией.", "en": "Authentication, payment, advertising and analytics integrations; work on network synchronization." }
+      ],
+      "links": [
+        { "kind": "store", "label": "Steam", "url": "https://store.steampowered.com/app/4926310/Berserk_Heroes_Online/" },
+        { "kind": "video", "label": "YouTube", "url": "https://www.youtube.com/watch?v=N2gKkAwR6PI" }
+      ],
+      "cover": null
+    },
+    {
+      "id": "samedi-manor",
+      "title": "Samedi Manor: Idle Simulator",
+      "summary": {
+        "ru": "Мобильный idle-симулятор с производством ресурсов и боевым режимом.",
+        "en": "A mobile idle simulator with resource production and a battle mode."
+      },
+      "contributions": [
+        { "ru": "Разработка и интеграция боевого режима auto-battler с нуля.", "en": "Built and integrated an auto-battler mode from scratch." },
+        { "ru": "Архитектура игровых подсистем, игровая логика и UI.", "en": "Game subsystem architecture, gameplay logic and UI." },
+        { "ru": "Рефакторинг и оптимизация GUI и тяжёлой логики для мобильных устройств.", "en": "Refactoring and optimization of GUI and demanding game logic for mobile devices." }
+      ],
+      "links": [
+        { "kind": "store", "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.blackcaviargames.samediresidence" }
+      ],
+      "cover": null
+    },
+    {
+      "id": "eco-tycoon",
+      "title": "Eco Tycoon: Idle Water Cleaner",
+      "summary": {
+        "ru": "Мобильный idle-тайкун об очистке океана и переработке пластика.",
+        "en": "A mobile idle tycoon about ocean cleanup and plastic recycling."
+      },
+      "contributions": [
+        { "ru": "Архитектура игровых подсистем и программная реализация визуальной части.", "en": "Game subsystem architecture and implementation of visual features." },
+        { "ru": "Разработка игровой логики, GUI и новых механик.", "en": "Development of game logic, GUI and new mechanics." }
+      ],
+      "links": [
+        { "kind": "store", "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.blackcaviargames.ecotycoon" }
+      ],
+      "cover": null
+    },
+    {
+      "id": "thesia",
+      "title": "Thesia: Isekai World RPG",
+      "summary": {
+        "ru": "Коллекционная RPG. Архивный проект; сохранилось видео игрового процесса.",
+        "en": "A hero-collecting RPG. An archive project with surviving gameplay footage."
+      },
+      "status": "archive",
+      "contributions": [],
+      "links": [
+        { "kind": "video", "label": "YouTube", "url": "https://www.youtube.com/watch?v=QWBxNgJqZQY" }
+      ],
+      "cover": null
+    }
+  ],
+  "backend": [
+    {
+      "id": "homealone",
+      "title": "HomeAlone",
+      "status": "in-development",
+      "projectType": { "ru": "Личный проект", "en": "Personal project" },
+      "summary": {
+        "ru": "Go-бэкенд приложения для организации встреч и поиска компании. HTTP API для пользователей и мероприятий, PostgreSQL и модульная организация серверной логики.",
+        "en": "A Go backend for organizing meetups and finding people to join. HTTP APIs for users and activities, PostgreSQL and a modular server architecture."
+      },
+      "contributions": [
+        {
+          "ru": "Организация функциональных модулей с разделением HTTP-транспорта, сервисной логики и репозиториев; зависимости от хранилища заданы интерфейсами.",
+          "en": "Feature modules separating HTTP transport, service logic and repositories, with storage dependencies defined through interfaces."
+        },
+        {
+          "ru": "HTTP API для создания, чтения, изменения и удаления пользователей и мероприятий; фильтрация и пагинация списков мероприятий.",
+          "en": "HTTP APIs for creating, reading, updating and deleting users and activities, with filtering and pagination for activity lists."
+        },
+        {
+          "ru": "Работа с PostgreSQL через pgx: параметризованные запросы, пул подключений, ограничения целостности и SQL-миграции.",
+          "en": "PostgreSQL access through pgx: parameterized queries, connection pooling, integrity constraints and SQL migrations."
+        },
+        {
+          "ru": "Передача context и таймауты операций с БД, логирование через zap, Swagger-документация API и локальное окружение в Docker Compose.",
+          "en": "Context propagation and database operation timeouts, zap logging, Swagger API documentation and a local Docker Compose environment."
+        }
+      ],
+      "stack": ["Go", "HTTP", "REST API", "PostgreSQL", "pgx", "SQL", "Docker Compose", "zap", "Swagger"],
+      "roadmap": [
+        { "ru": "Отдельный сервис аутентификации и проверка сессий через gRPC.", "en": "A separate authentication service with gRPC session checks." },
+        { "ru": "Kafka для событий регистрации и фоновой обработки; outbox и идемпотентные потребители.", "en": "Kafka for registration events and background processing, with an outbox and idempotent consumers." },
+        { "ru": "Интеграция Redis и поиск мероприятий на карте.", "en": "Redis integration and map-based activity search." }
+      ],
+      "links": [],
+      "cover": null
+    }
+  ],
+  "articles": [
+    {
+      "id": "unity-mobile-voxel-rendering",
+      "title": {
+        "ru": "Техники рендеринга воксельного мира на мобильном устройстве в Unity",
+        "en": "Voxel world rendering techniques for mobile devices in Unity"
+      },
+      "publication": "Хабр",
+      "language": "ru",
+      "url": "https://habr.com/ru/articles/1064472/",
+      "tags": ["Unity", "Rendering", "Voxels", "Mobile"]
+    }
+  ]
+}

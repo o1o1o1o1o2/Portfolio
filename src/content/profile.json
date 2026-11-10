@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "identity": {
+    "displayNameRu": "Данил",
+    "displayNameEn": null
+  },
+  "general": {
+    "role": { "ru": "Software Engineer · Unity/C# · Go Backend", "en": "Software Engineer · Unity/C# · Go Backend" },
+    "summary": {
+      "ru": "Более пяти лет коммерческой разработки на C#/Unity: архитектура игровых систем, core-компоненты, внешние интеграции и оптимизация. В личном проекте HomeAlone разрабатываю бэкенд на Go — HTTP API, PostgreSQL и модульную серверную логику.",
+      "en": "Over five years of commercial C#/Unity development: game system architecture, core components, external integrations and optimization. In my personal project HomeAlone, I develop a Go backend with HTTP APIs, PostgreSQL and modular server logic."
+    }
+  },
+  "backend": {
+    "role": { "ru": "Golang / Backend Developer", "en": "Golang / Backend Developer" },
+    "summary": {
+      "ru": "Software Engineer с более чем пятью годами коммерческой разработки на C#/Unity. Проектировал подсистемы и переиспользуемые компоненты, интегрировал внешние сервисы, решал проблемы сетевой синхронизации и производительности. Сейчас применяю этот опыт в Go-бэкенде HomeAlone: разрабатываю HTTP API, слой хранения на PostgreSQL и границы функциональных модулей.",
+      "en": "Software Engineer with over five years of commercial C#/Unity development. Designed subsystems and reusable components, integrated external services, and resolved network synchronization and performance issues. I now apply this experience to the HomeAlone Go backend, developing HTTP APIs, PostgreSQL persistence and feature module boundaries."
+    },
+    "strengths": [
+      { "ru": "Архитектура и core-компоненты: декомпозиция, интерфейсы, Clean Architecture, DDD и SOLID.", "en": "Architecture and core components: decomposition, interfaces, Clean Architecture, DDD and SOLID." },
+      { "ru": "Интеграции и production-диагностика: аутентификация, платежи, аналитика, логирование и сетевые ошибки в коммерческих продуктах.", "en": "Integrations and production diagnostics: authentication, payments, analytics, logging and network issues in commercial products." },
+      { "ru": "Go-практика: HTTP API, PostgreSQL/pgx, SQL-миграции, context, таймауты и Docker Compose в HomeAlone.", "en": "Hands-on Go work: HTTP APIs, PostgreSQL/pgx, SQL migrations, context, timeouts and Docker Compose in HomeAlone." }
+    ]
+  }
+}

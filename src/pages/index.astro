@@ -1,0 +1,8 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<!doctype html><html lang="ru"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex" /><title>Данил · Portfolio</title><style>body{font:20px system-ui;background:#131512;color:#eeeee8;display:grid;place-content:center;min-height:90vh}a{color:#c2d58c;margin-right:24px}</style></head><body><main><h1>Данил · Portfolio</h1><a href={`${base}/ru/`}>Русский →</a><a href={`${base}/en/`}>English →</a></main><script define:vars={{base}}>
+let locale = navigator.language.toLowerCase().startsWith('ru') ? 'ru' : 'en';
+try { const saved = localStorage.getItem('portfolio-language'); if (saved === 'ru' || saved === 'en') locale = saved; } catch {}
+location.replace(`${base}/${locale}/${location.hash}`);
+</script></body></html>

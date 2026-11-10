@@ -1,0 +1,97 @@
+---
+import portfolio from '../../content/portfolio.json';
+import profile from '../../content/profile.json';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'ru' } }, { params: { lang: 'en' } }];
+}
+const lang = Astro.params.lang as 'ru' | 'en';
+const ru = lang === 'ru';
+const t = (a: string, b: string) => ru ? a : b;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = `${base}/${lang}/`;
+const other = `${base}/${ru ? 'en' : 'ru'}/`;
+const images: Record<string, string> = { 'berserk-heroes-online': 'berserk.jpg', 'samedi-manor': 'samedi.webp', 'eco-tycoon': 'eco.webp' };
+const labels: Record<string, string> = { 'berserk-heroes-online': 'CCG · PC / MOBILE', 'samedi-manor': 'IDLE · MOBILE', 'eco-tycoon': 'TYCOON · MOBILE', 'thesia': 'RPG · ARCHIVE' };
+const description = profile.general.summary[lang];
+const backend = portfolio.backend[0];
+const article = portfolio.articles[0];
+const canonical = new URL(home, Astro.site).href;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#131512" />
+    <meta property="og:title" content={t('Данил — Unity / C# & Go', 'Danil — Unity / C# & Go')} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(`${base}/social.svg`, Astro.site).href} />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ru" href={new URL(`${base}/ru/`, Astro.site).href} />
+    <link rel="alternate" hreflang="en" href={new URL(`${base}/en/`, Astro.site).href} />
+    <title>{t('Данил — разработчик Unity / C# и Go', 'Danil — Unity / C# & Go Developer')}</title>
+  </head>
+  <body>
+    <a class="skip" href="#main">{t('К содержимому', 'Skip to content')}</a>
+    <header class="header wrap">
+      <a class="wordmark" href={home} aria-label={t('Данил — главная', 'Danil — home')}><span class="brand-icon">d.</span>{t('Данил', 'Danil')}<span class="wordmark-sub"> / developer</span></a>
+      <nav aria-label={t('Основная навигация', 'Main navigation')}>
+        <a href="#games">{t('Игры', 'Games')}</a><a href="#backend">{t('Бэкенд', 'Backend')}</a><a href="#articles">{t('Статьи', 'Articles')}</a>
+      </nav>
+      <div class="header-end"><a class="language" href={other} data-language-switch aria-label={t('Switch to English', 'Переключить на русский')}>{ru ? <><b>RU</b><span>/ EN</span></> : <><span>RU /</span><b>EN</b></>}</a><a class="header-contact" href="#contact">{t('На связи', 'Get in touch')} <span>↗</span></a></div>
+    </header>
+    <main id="main">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-top"><span class="eyebrow"><span class="dot"></span> SOFTWARE ENGINEER</span><span class="edition">PORTFOLIO — 2026</span></div>
+        <h1 id="hero-title">{t('Игра начинается', 'It starts')}<br />{t('с хорошей', 'with good')}{'\u00a0'}<em>{t('системы.', 'systems.')}</em></h1>
+        <div class="hero-bottom"><p>{t('Создаю игры на Unity / C# и развиваю бэкенд на Go. От архитектуры и игровых механик — до интеграций и оптимизации.', 'I build games with Unity / C# and develop backend systems in Go. From architecture and gameplay to integrations and optimization.')}</p><a class="button light" href="#games">{t('Смотреть проекты', 'Explore my work')} <span>↘</span></a></div>
+        <div class="hero-footer"><span>UNITY / C# <i>+</i> GO BACKEND</span><a href="#hireops">{t('И ещё немного игрового безумия', 'And a little playful overengineering')} <span>↓</span></a></div>
+      </section>
+
+      <section class="work-section wrap" id="games" aria-labelledby="games-title">
+        <div class="section-heading"><div><span class="eyebrow">01 / {t('ИЗБРАННЫЕ ПРОЕКТЫ', 'SELECTED WORK')}</span><h2 id="games-title">{t('Миры, к которым', 'Worlds I helped')}<br />{t('я приложил руку.', 'bring to life.')}</h2></div><p>{t('Коммерческие игры. Реальные задачи. Мой вклад в работу команды.', 'Commercial games. Real challenges. My contribution to a team effort.')}</p></div>
+        <div class="games-grid">
+          {portfolio.games.map((game, index) => <article class:list={['game-card', { featured: index === 0 }]}>
+            <a class:list={['game-image', game.id]} href={game.links[0].url} target="_blank" rel="noopener noreferrer" aria-label={`${game.title} — ${game.links[0].label} (${t('новая вкладка', 'new tab')})`}>
+              {images[game.id] ? <img src={`${base}/images/${images[game.id]}`} alt={t(`Официальное изображение ${game.title}`, `Official artwork for ${game.title}`)} loading="lazy" width="640" height="360" /> : <div class="archive-art"><span class="archive-symbol">T</span><span>THESIA<br /><small>ISEKAI WORLD RPG</small></span><span class="archive-tag">{t('ВИДЕОАРХИВ', 'VIDEO ARCHIVE')} ↗</span></div>}
+              <span class="image-arrow" aria-hidden="true">↗</span>
+            </a>
+            <div class="game-meta"><span>{labels[game.id]}</span><span>0{index + 1}</span></div>
+            <h3>{game.title}</h3><p>{game.summary[lang]}</p>
+            {game.contributions.length > 0 && <details><summary>{t('Мой вклад', 'My contribution')} <span>+</span></summary><ul>{game.contributions.map(item => <li>{item[lang]}</li>)}</ul></details>}
+            <div class="project-links">{game.links.map(link => <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>
+          </article>)}
+        </div>
+      </section>
+
+      <section class="backend-section" id="backend" aria-labelledby="backend-title"><div class="wrap backend-grid">
+        <div><span class="eyebrow">02 / BACKEND ENGINEERING</span><h2 id="backend-title">{t('За интерфейсом —', 'Behind the interface,')}<br /><em>{t('система.', 'a system.')}</em></h2><p class="backend-intro">{profile.backend.summary[lang]}</p><div class="project-label"><span class="dot"></span> HOMEALONE <span>{t('ЛИЧНЫЙ ПРОЕКТ · В РАЗРАБОТКЕ', 'PERSONAL PROJECT · IN DEVELOPMENT')}</span></div><p>{backend.summary[lang]}</p><div class="tags">{['Go', 'PostgreSQL', 'pgx', 'Docker', 'REST API'].map(tag => <span>{tag}</span>)}</div></div>
+        <div class="architecture"><div class="window-bar"><span><i></i><i></i><i></i></span><span>homealone / architecture</span><span>↗</span></div><div class="diagram"><div class="diagram-node client">HTTP API <small>users · activities</small></div><span class="connector">↓</span><div class="diagram-row"><div class="diagram-node">Transport</div><span>→</span><div class="diagram-node">Service</div><span>→</span><div class="diagram-node">Repository</div></div><span class="connector">↓</span><div class="diagram-node database"><span>▤</span> PostgreSQL <small>pgx · SQL migrations</small></div><div class="diagram-footer">context / timeouts / zap / Swagger</div></div><div class="architecture-note"><span class="dot"></span>{t('Текущая архитектура проекта', 'Current project architecture')}</div></div>
+        <div class="backend-details"><details><summary>{t('Что реализовано', 'What is implemented')} <span>+</span></summary><ul>{backend.contributions.map(item => <li>{item[lang]}</li>)}</ul></details><details><summary>{t('Следующие этапы', 'Next steps')} <span>+</span></summary><ul>{backend.roadmap.map(item => <li>{item[lang]}</li>)}</ul></details></div>
+      </div></section>
+
+      <section class="articles-section wrap" id="articles" aria-labelledby="articles-title"><div class="section-heading"><div><span class="eyebrow">03 / {t('ЗАМЕТКИ И РАЗБОРЫ', 'NOTES & DEEP DIVES')}</span><h2 id="articles-title">{t('Разобраться.', 'Understand it.')}<br />{t('Потом рассказать.', 'Then write it down.')}</h2></div><p>{t('О технических решениях, экспериментах и том, что происходит под капотом.', 'Technical decisions, experiments and what happens under the hood.')}</p></div>
+        <a class="article-card" href={article.url} target="_blank" rel="noopener noreferrer"><div class="voxel-art" aria-hidden="true">{Array.from({length: 25}, (_, i) => <span style={`--i:${i};--h:${[2,3,2,4,2,3,5,4,3,2,2,3,6,4,3,1,3,4,3,2,1,2,2,1,1][i]}`}></span>)}</div><div class="article-copy"><span class="eyebrow">{t('ХАБР · СТАТЬЯ', 'HABR · ARTICLE IN RUSSIAN')}</span><h3>{article.title[lang]}</h3><div class="tags">{article.tags.map(tag => <span>{tag}</span>)}</div><span class="text-link">{t('Читать статью', 'Read the article')} ↗</span></div><span class="article-arrow">↗</span></a>
+      </section>
+
+      <section class="hireops wrap" id="hireops" aria-labelledby="hireops-title"><div class="coffee-mark" aria-hidden="true">☕</div><div><span class="eyebrow">SIDE QUEST / {t('В РАЗРАБОТКЕ', 'IN DEVELOPMENT')}</span><h2 id="hireops-title">{t('Вакансия сама себя не закроет.', 'That vacancy won’t fill itself.')}</h2><p>{t('HireOps — маленькая фабрика найма. Резюме, кофе и слишком много автоматизации. Скоро здесь можно будет сделать перерыв на игру.', 'HireOps is a little recruitment factory. CVs, coffee and a little too much automation. A playable coffee break is coming here.')}</p></div><span class="coming-soon">HIREOPS <span>↗</span></span></section>
+
+      <section class="contact wrap" id="contact" aria-labelledby="contact-title"><span class="eyebrow">{t('ЕСТЬ ИНТЕРЕСНАЯ ЗАДАЧА?', 'HAVE AN INTERESTING CHALLENGE?')}</span><h2 id="contact-title">{t('Давайте', 'Let’s build')} <em>{t('создавать.', 'something.')}</em><span class="contact-arrow" aria-hidden="true">↗</span></h2><div class="contact-links"><a href="https://github.com/o1o1o1o1o2" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://habr.com/ru/users/o1o1o1o1o2/" target="_blank" rel="noopener noreferrer">{t('Хабр', 'Habr')} ↗</a><span>{t('Unity / C# · Go · Удалённо', 'Unity / C# · Go · Remote')}</span></div></section>
+    </main>
+    <footer class="footer wrap"><span>© 2026 {t('Данил', 'Danil')}</span><span>{t('Продумано до последней системы.', 'Thought through, system by system.')}</span><a href="#main">{t('Наверх', 'Back to top')} ↑</a></footer>
+    <script>
+      const locale = document.documentElement.lang;
+      try { localStorage.setItem('portfolio-language', locale); } catch { /* Storage is optional. */ }
+      document.querySelector('[data-language-switch]')?.addEventListener('click', (event) => {
+        const link = event.currentTarget as HTMLAnchorElement;
+        link.hash = location.hash;
+      });
+    </script>
+  </body>
+</html>
