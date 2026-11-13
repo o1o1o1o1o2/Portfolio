@@ -342,9 +342,10 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
     const bounds = surface.getBoundingClientRect();
     const width = Math.max(1, bounds.width);
     const height = Math.max(1, bounds.height);
-    const renderHeight = Math.max(1, Math.round(height));
+    const density = Math.max(1, window.devicePixelRatio || 1);
+    const renderHeight = Math.max(1, Math.round(height * density));
     // Keep the vertical world view constant across device pixel densities.
-    return { width: Math.max(1, Math.round(width)),
+    return { width: Math.max(1, Math.round(width * density)),
       height: renderHeight, zoom: renderHeight / CAMERA_WORLD_HEIGHT };
   };
   const viewport = measureViewport();
