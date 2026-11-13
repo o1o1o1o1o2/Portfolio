@@ -1,5 +1,6 @@
 export const VIEW_WIDTH = 960;
 export const VIEW_HEIGHT = 540;
+export const CAMERA_WORLD_HEIGHT = 17 * 32;
 export const WORLD_WIDTH = 6144;
 export const WORLD_HEIGHT = 4608;
 export const STEP = 1 / 60;

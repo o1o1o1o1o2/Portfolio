@@ -3,14 +3,12 @@ import gameAtlasUrl from './assets/game-atlas.png?url';
 import gameAtlas from './assets/game-atlas.json';
 import officeAtlasUrl from './assets/office-atlas.png?url';
 import officeAtlas from './assets/office-atlas.json';
-import { FINAL_BOSS_KIND, RUN_SECONDS, STEP, enemies } from './config.ts';
+import { FINAL_BOSS_KIND, RUN_SECONDS, STEP, CAMERA_WORLD_HEIGHT, enemies } from './config.ts';
 import { Field } from './field.ts';
 import { Run, type RunPhase } from './run.ts';
 import { copy, type Locale } from './text.ts';
 import { createGameGuide } from './guide';
 import { createUpgradeCard } from './upgrade-card';
-
-const CAMERA_ZOOM = 1.6;
 
 function element<K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text?: string) {
   const result = document.createElement(tag);
@@ -344,10 +342,10 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
     const bounds = surface.getBoundingClientRect();
     const width = Math.max(1, bounds.width);
     const height = Math.max(1, bounds.height);
-    // Match the displayed canvas in CSS pixels. Keep world magnification fixed;
-    // different viewport sizes expose more or less of the world.
+    const renderHeight = Math.max(1, Math.round(height));
+    // Keep the vertical world view constant across device pixel densities.
     return { width: Math.max(1, Math.round(width)),
-      height: Math.max(1, Math.round(height)), zoom: CAMERA_ZOOM };
+      height: renderHeight, zoom: renderHeight / CAMERA_WORLD_HEIGHT };
   };
   const viewport = measureViewport();
   let viewportZoom = viewport.zoom;
