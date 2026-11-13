@@ -115,24 +115,42 @@ test('ninja fires five evenly spaced shots with two red and three blue in random
   assert.equal(orders.size, 2);
 });
 
-test('falling stamp waits for a visible enemy and can choose one farther away', () => {
-  const run = new Run(() => 0); run.start(); run.levels.fill(0); run.levels[5] = 1;
+test('falling stamps use empty ground without enemies and keep impact circles apart', () => {
+  let seed = 123;
+  const random = () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
+  const run = new Run(random); run.start(); run.levels.fill(0); run.levels[5] = 5;
   run.spawnWave = () => {};
-  run.spawn(2, run.cameraX + run.viewWidth + 60, run.y);
   run.step(0, 0);
   run.ticks += Math.round(fallingStamp.waitTime / STEP) - 1;
   run.step(0, 0);
-  assert.equal(run.stampCount, 0);
-  const near = run.spawn(2, run.x + 35, run.y);
-  run.enemies.a[near] = 0;
-  const index = run.spawn(2, run.x + 190, run.y);
-  run.enemies.a[index] = 0;
-  for (let tick = 0; tick < 12 && !run.stampCount; tick++) run.step(0, 0);
-  assert.equal(run.stampCount, 1);
-  assert.equal(run.stampPositions[0], run.enemies.position[index * 2]);
-  assert.equal(run.stampPositions[1], run.enemies.position[index * 2 + 1]);
-  for (let tick = 0; tick <= Math.ceil(fallingStamp.fallTime / STEP); tick++) run.step(0, 0);
-  assert.ok(run.enemies.life[index] < enemies[2].hp);
+  assert.ok(run.stampCount > 0);
+  for (let i = 0; i < run.stampCount; i++) {
+    const x = run.stampPositions[i * 2], y = run.stampPositions[i * 2 + 1];
+    assert.ok(x >= run.cameraX && x <= run.cameraX + run.viewWidth);
+    assert.ok(y >= run.cameraY && y <= run.cameraY + run.viewHeight);
+    for (let j = 0; j < i; j++) {
+      assert.ok(Math.hypot(x - run.stampPositions[j * 2], y - run.stampPositions[j * 2 + 1]) >= fallingStamp.radius * 2);
+    }
+  }
+});
+
+test('nearby enemies do not receive overlapping stamps in the same volley', () => {
+  const run = new Run(() => .5); run.start(); run.levels.fill(0); run.levels[5] = 5;
+  run.spawnWave = () => {};
+  const first = run.spawn(2, run.x + 35, run.y);
+  const second = run.spawn(2, run.x + 45, run.y);
+  run.enemies.a[first] = run.enemies.a[second] = 0;
+  run.step(0, 0);
+  run.ticks += Math.round(fallingStamp.waitTime / STEP) - 1;
+  run.step(0, 0);
+  let targeted = 0;
+  for (let i = 0; i < run.stampCount; i++) {
+    for (const enemy of [first, second]) {
+      if (Math.hypot(run.stampPositions[i * 2] - run.enemies.position[enemy * 2],
+        run.stampPositions[i * 2 + 1] - run.enemies.position[enemy * 2 + 1]) < 1) targeted++;
+    }
+  }
+  assert.equal(targeted, 1);
 });
 
 test('hits push ordinary enemies away, barely push mini-bosses and leave the final boss immune', () => {
