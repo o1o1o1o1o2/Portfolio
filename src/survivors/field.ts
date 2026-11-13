@@ -61,7 +61,8 @@ class Images {
   private used = 0;
   private previouslyUsed = 0;
 
-  constructor(private readonly scene: Phaser.Scene, private readonly depth: number) {}
+  constructor(private readonly scene: Phaser.Scene, private readonly depth: number,
+    private readonly worldLayer?: Phaser.GameObjects.Layer) {}
 
   begin() { this.previouslyUsed = this.used; this.used = 0; }
   draw(key: string, x: number, y: number, rotation = 0, scale = 1, alpha = 1,
@@ -70,6 +71,11 @@ class Images {
     if (!image) {
       image = this.scene.add.image(x, y, key).setDepth(this.depth);
       this.images.push(image);
+    }
+    const displayList = this.worldLayer && depth >= 4 && depth < 5 ? this.worldLayer : this.scene.children;
+    if (image.displayList !== displayList) {
+      image.removeFromDisplayList();
+      displayList.add(image);
     }
     this.used++;
     if (image.texture.key !== key || (frame !== undefined && image.frame.name !== frame)) image.setTexture(key, frame);
@@ -93,6 +99,8 @@ function makeTextures(scene: Phaser.Scene) {
     g.generateTexture(name, w, h);
     g.clear();
   };
+  g.fillStyle(0xffffff).fillRect(0, 0, 1, 1);
+  save('health-pixel', 1, 1);
 
   // Bake seeded variation once. Rendering remains one repeating TileSprite.
   const officeSize = 1024;
@@ -176,7 +184,7 @@ export class Field {
   private readonly tiles: Phaser.GameObjects.TileSprite;
   private readonly boundary: Phaser.GameObjects.Rectangle;
   private readonly fx: Phaser.GameObjects.Graphics;
-  private readonly health: Phaser.GameObjects.Graphics;
+  private readonly health: Images;
   private readonly mobs: Images;
   private readonly dyingMobs: Images;
   private readonly bullets: Images;
@@ -209,21 +217,23 @@ export class Field {
           source.x + slice.x / OFFICE_PROP_SCALE, source.y, slice.width / OFFICE_PROP_SCALE, source.h);
       }
     }
-    this.office = new Images(scene, 4);
+    const worldLayer = scene.add.layer().setDepth(4);
+    this.office = new Images(scene, 4, worldLayer);
     this.tiles = scene.add.tileSprite(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 'floor').setOrigin(0);
     this.boundary = scene.add.rectangle(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
       .setOrigin(0).setStrokeStyle(4, 0x7b699e, .75).setDepth(1);
     this.fx = scene.add.graphics().setDepth(2);
     this.areas = new Images(scene, 2);
     this.pickups = new Images(scene, 3);
-    this.mobs = new Images(scene, 4);
-    this.dyingMobs = new Images(scene, 4.5);
+    this.mobs = new Images(scene, 4, worldLayer);
+    this.dyingMobs = new Images(scene, 4.5, worldLayer);
     this.hero = scene.add.image(0, 0, 'game-atlas', 'hero-walk-0').setDepth(5)
       .setOrigin(.5, heroAnimation.originY)
       .setDisplaySize(heroAnimation.displaySize, heroAnimation.displaySize);
     this.bullets = new Images(scene, 6);
     this.stamps = new Images(scene, 7);
-    this.health = scene.add.graphics().setDepth(8);
+    worldLayer.add(this.hero);
+    this.health = new Images(scene, 8);
     this.damageDigits = new Images(scene, 9);
     this.speechBubble = scene.add.graphics().setDepth(10);
     this.speech = scene.add.text(0, 0, '', { fontFamily: 'Arial, sans-serif', fontSize: '12px',
@@ -306,7 +316,7 @@ export class Field {
       g.lineStyle(6, 0x49385e, wallAlpha).strokeRect(3, 3, run.viewWidth - 6, run.viewHeight - 6);
       g.lineStyle(2, 0xa788bb, wallAlpha).strokeRect(5, 5, run.viewWidth - 10, run.viewHeight - 10);
     }
-    this.health.clear();
+    this.health.begin();
     this.areas.begin();
     if (run.levels[2]) {
       const radius = auraRadius(run.levels[2]);
@@ -425,6 +435,7 @@ export class Field {
       g.lineStyle(5, 0xff9cbf, 1 - t).strokeCircle(heroX - x, heroY - y,
         t * run.encounterRadius);
     }
+    this.health.end();
     const vfx = this.victoryFx.clear();
     const celebrating = run.victoryRemaining > 0;
     this.victoryTitle.setVisible(celebrating && run.victoryRemaining < victoryConfig.seconds - victoryConfig.titleAfter);
@@ -527,8 +538,10 @@ export class Field {
   }
 
   private drawHealth(x: number, y: number, width: number, ratio: number, color: number) {
-    this.health.fillStyle(0x181323, .9).fillRect(x - width / 2, y, width, 5);
-    this.health.fillStyle(color).fillRect(x - width / 2 + 1, y + 1, (width - 2) * Math.max(0, ratio), 3);
+    this.health.draw('health-pixel', x - width / 2, y, 0, width, .9,
+      undefined, 5, 0, 0, 0x181323);
+    this.health.draw('health-pixel', x - width / 2 + 1, y + 1, 0,
+      (width - 2) * Math.max(0, Math.min(1, ratio)), 1, undefined, 3, 0, 0, color);
   }
 
   private drawDamage(run: Run, cameraX: number, cameraY: number, progress: number) {

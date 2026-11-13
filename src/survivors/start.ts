@@ -158,6 +158,13 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
   }
 
   function fitGuide() {
+    if (panel.classList.contains('survivor-panel-upgrade')) {
+      panel.style.removeProperty('zoom');
+      const scale = Math.min(1, Math.max(1, overlay.clientWidth - 16) / 1280,
+        Math.max(1, overlay.clientHeight - 16) / Math.max(1, panel.scrollHeight));
+      panel.style.setProperty('zoom', String(scale));
+      return;
+    }
     if (!panel.classList.contains('survivor-panel-guide')) {
       panel.style.removeProperty('zoom');
       return;
@@ -239,6 +246,7 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
       if (run.phase === 'won') addButton(t.projects, () => close(true)).classList.add('survivor-button-game');
       addButton(t.close, () => close()).classList.add('survivor-button-game', 'survivor-button-exit');
     }
+    fitGuide();
     if (run.phase === 'upgrade') {
       // Focus the panel, not the first choice: programmatic :focus-visible otherwise
       // pins its hover transform and outline while the mouse visits other cards.
