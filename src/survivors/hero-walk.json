@@ -3,6 +3,7 @@
   "frameHeight": 128,
   "framesPerDirection": 8,
   "displaySize": 67.2,
+  "trackScales": [0.95, 1, 1, 1, 1],
   "originY": 0.947,
   "playbackSpeed": 1,
   "tracks": [

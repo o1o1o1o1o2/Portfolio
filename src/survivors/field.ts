@@ -370,6 +370,10 @@ export class Field {
     this.hero.setPosition(heroX - x, heroY - y).setFlipX(pose.flipX);
     const heroFrame = 'hero-walk-' + pose.frame;
     if (this.hero.frame.name !== heroFrame) this.hero.setFrame(heroFrame);
+    const heroDisplaySize = heroAnimation.displaySize * heroAnimation.trackScales[Math.floor(pose.frame / heroAnimation.framesPerDirection)];
+    if (Math.abs(this.hero.displayWidth - heroDisplaySize) > .001) {
+      this.hero.setDisplaySize(heroDisplaySize, heroDisplaySize);
+    }
     const heroDepth = 4 + heroY / WORLD_HEIGHT;
     if (this.hero.depth !== heroDepth) this.hero.setDepth(heroDepth);
     this.hero.setAlpha(run.invulnerable > 0 && Math.floor(run.time * 20) % 2 === 0 ? .45 : 1);
