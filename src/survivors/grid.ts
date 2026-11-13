@@ -12,17 +12,20 @@ const maxEnemyRadius = Math.max(...enemies.map(enemy => enemy.radius));
 /** Linked lists stored in arrays. Indices remain stable until end-of-step compaction. */
 export class EnemyGrid {
   private readonly heads = new Int32Array(COLS * ROWS);
+  private readonly occupied = new Int32Array(COLS * ROWS);
+  private occupiedCount = 0;
   private next = new Int32Array(MAX_ENEMIES);
 
   private readonly onHit: (x: number, y: number, amount: number) => void;
 
   constructor(onHit: (x: number, y: number, amount: number) => void) {
     this.onHit = onHit;
-    this.clear();
+    this.heads.fill(-1);
   }
 
   clear() {
-    this.heads.fill(-1);
+    for (let i = 0; i < this.occupiedCount; i++) this.heads[this.occupied[i]] = -1;
+    this.occupiedCount = 0;
   }
 
   insert(i: number, x: number, y: number) {
@@ -31,6 +34,7 @@ export class EnemyGrid {
       next.set(this.next); this.next = next;
     }
     const cell = this.row(y) * COLS + this.col(x);
+    if (this.heads[cell] === -1) this.occupied[this.occupiedCount++] = cell;
     this.next[i] = this.heads[cell];
     this.heads[cell] = i;
   }

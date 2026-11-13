@@ -331,7 +331,7 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
   const game = new Phaser.Game({
     type: Phaser.AUTO, parent: surface, width: viewport.width, height: viewport.height,
     backgroundColor: '#282840', scene,
-    fps: { smoothStep: false },
+    fps: { target: 60, limit: 60, smoothStep: false },
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     render: { antialias: false, pixelArt: true, roundPixels: true },
   });

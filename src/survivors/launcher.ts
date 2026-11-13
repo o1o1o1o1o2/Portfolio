@@ -45,12 +45,11 @@ export function bindGameLaunchers() {
       try {
         if (matchMedia('(pointer: coarse)').matches && !document.fullscreenElement &&
             document.documentElement.requestFullscreen) {
-          try {
-            await document.documentElement.requestFullscreen();
+          void document.documentElement.requestFullscreen().then(async () => {
             ownsFullscreen = true;
-            if (signal.aborted || !root.isConnected) { stop(); return; }
-            await orientation?.lock?.('landscape').catch(() => {});
-          } catch {}
+            if (signal.aborted || !root.isConnected || (!loading && !dialog.open)) { stop(); return; }
+            try { await orientation?.lock?.('landscape'); } catch {}
+          }).catch(() => {});
         }
         const { startGame } = await import('./start');
         if (signal.aborted || !root.isConnected) return;

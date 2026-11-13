@@ -19,10 +19,15 @@ export const crowdRadii = enemySprites.types.map(type =>
 export class CrowdSeparation {
   private readonly heads = new Int32Array(SIZE);
   private readonly occupied = new Int32Array(SIZE);
+  private occupiedCount = 0;
   private next = new Int32Array(MAX_ENEMIES * ENTRIES_PER_ENEMY);
   private firstCol = new Int32Array(MAX_ENEMIES);
   private firstRow = new Int32Array(MAX_ENEMIES);
   private correction = new Float32Array(MAX_ENEMIES * 2);
+
+  constructor() {
+    this.heads.fill(-1);
+  }
 
   solve(pool: Pool) {
     if (this.firstCol.length < pool.capacity) {
@@ -31,7 +36,8 @@ export class CrowdSeparation {
       this.firstRow = new Int32Array(pool.capacity);
       this.correction = new Float32Array(pool.capacity * 2);
     }
-    this.heads.fill(-1);
+    for (let i = 0; i < this.occupiedCount; i++) this.heads[this.occupied[i]] = -1;
+    this.occupiedCount = 0;
     this.correction.fill(0, 0, pool.count * 2);
     let occupiedCount = 0;
     for (let i = 0; i < pool.count; i++) {
@@ -53,6 +59,7 @@ export class CrowdSeparation {
       }
     }
 
+    this.occupiedCount = occupiedCount;
     for (let k = 0; k < occupiedCount; k++) {
       const cell = this.occupied[k], row = Math.floor(cell / STRIDE), col = cell % STRIDE;
       for (let entry = this.heads[cell]; entry >= 0; entry = this.next[entry]) {
