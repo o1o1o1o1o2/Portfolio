@@ -18,7 +18,9 @@
 .survivor-status, .survivor-panel, .survivor-load { font-family:system-ui,sans-serif; }
 .survivor-load:empty { display:none; }
 .survivor-run { position:relative; width:100%; height:100%; overflow:hidden; }
-.survivor-surface { position:absolute; inset:0; touch-action:none; background:#17152a; }
+.survivor-surface { position:absolute; left:50%; top:50%; width:min(100%, calc(100cqh * 16 / 9)); aspect-ratio:16/9; transform:translate(-50%,-50%); touch-action:none; background:#17152a; }
+.survivor-run { container-type:size; }
+.survivor-dialog:fullscreen { width:100%; height:100%; margin:0; border:0; border-radius:0; }
 .survivor-surface canvas { display:block; image-rendering:pixelated; }
 .survivor-hud { position:absolute; z-index:1; inset:8px 8px auto; display:flex; flex-wrap:wrap; align-items:center; gap:7px; pointer-events:none; }
 .survivor-hud .survivor-button { margin-left:auto; pointer-events:auto; }

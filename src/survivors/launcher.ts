@@ -13,7 +13,20 @@ export function bindGameLaunchers() {
     let dispose: (() => void) | undefined;
     let opener: HTMLButtonElement | undefined;
     let loading = false;
-    const stop = () => { dispose?.(); dispose = undefined; };
+    let ownsFullscreen = false;
+    const orientation = screen.orientation as ScreenOrientation & {
+      lock?: (orientation: 'landscape') => Promise<void>;
+    };
+    const stop = () => {
+      dispose?.(); dispose = undefined;
+      if (ownsFullscreen) {
+        orientation?.unlock?.();
+        if (document.fullscreenElement === document.documentElement) {
+          void document.exitFullscreen().catch(() => {});
+        }
+        ownsFullscreen = false;
+      }
+    };
     const unlockScroll = () => {
       document.body.classList.toggle('dialog-open', !!document.querySelector('dialog[open]'));
     };
@@ -30,9 +43,17 @@ export function bindGameLaunchers() {
       buttons.forEach(control => { control.disabled = true; });
       status.textContent = '';
       try {
+        if (matchMedia('(pointer: coarse)').matches && !document.fullscreenElement &&
+            document.documentElement.requestFullscreen) {
+          try {
+            await document.documentElement.requestFullscreen();
+            ownsFullscreen = true;
+            if (signal.aborted || !root.isConnected) { stop(); return; }
+            await orientation?.lock?.('landscape').catch(() => {});
+          } catch {}
+        }
         const { startGame } = await import('./start');
         if (signal.aborted || !root.isConnected) return;
-        stop();
         dialog.showModal();
         document.body.classList.add('dialog-open');
         dispose = startGame(host, locale, projects => {

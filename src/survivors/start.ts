@@ -312,10 +312,12 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
   const measureViewport = () => {
     const width = Math.max(1, surface.clientWidth);
     const height = Math.max(1, surface.clientHeight);
-    const density = Math.min(1, VIEW_WIDTH / width, VIEW_HEIGHT / height);
+    const density = Math.max(VIEW_WIDTH / width, VIEW_HEIGHT / height);
     // Render at the surface size instead of stretching a low-resolution canvas.
     // Compensate with camera zoom to preserve the visible world and game scale.
-    return { width: Math.round(width), height: Math.round(height), zoom: CAMERA_ZOOM / density };
+    const scale = 1 / density;
+    return { width: Math.max(1, Math.round(VIEW_WIDTH * scale)),
+      height: Math.max(1, Math.round(VIEW_HEIGHT * scale)), zoom: CAMERA_ZOOM * scale };
   };
   const viewport = measureViewport();
   let viewportZoom = viewport.zoom;
