@@ -22,6 +22,7 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
   const t = copy[locale];
   let run = new Run(Math.random, bossTest);
   let accumulator = 0, hudClock = 0;
+  let lastSimulationTime: number | undefined;
   let renderedPhase: RunPhase | undefined;
   let cancelConfirmation: (() => void) | undefined;
   let wakeGame = () => {};
@@ -324,9 +325,13 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
       this.draw();
     }
     draw() { this.field?.draw(run, accumulator / STEP); }
-    update(time: number, delta: number) {
+    update(time: number) {
+      // Limited-FPS Phaser delta includes a carried remainder. Use elapsed
+      // timestamps so that remainder cannot advance the simulation twice.
+      const elapsed = lastSimulationTime === undefined ? 0 : Math.max(0, (time - lastSimulationTime) / 1000);
+      lastSimulationTime = time;
       if (run.phase === 'running') {
-        accumulator += Math.min(delta / 1000, .1);
+        accumulator += Math.min(elapsed, .1);
         const x = Number(keys.has('KeyD') || keys.has('ArrowRight')) -
           Number(keys.has('KeyA') || keys.has('ArrowLeft')) + touchX;
         const y = Number(keys.has('KeyS') || keys.has('ArrowDown')) -
@@ -342,7 +347,10 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
         hudClock = time + 100;
         sync();
       }
-      if (run.phase !== 'running') this.game.loop.sleep();
+      if (run.phase !== 'running') {
+        lastSimulationTime = undefined;
+        this.game.loop.sleep();
+      }
     }
   }
 
