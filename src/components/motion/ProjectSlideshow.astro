@@ -1,0 +1,12 @@
+---
+interface Props { images: string[]; title: string; base: string; }
+const { images, title, base } = Astro.props;
+---
+<div class="stage-image project-slideshow" data-parallax data-project-slideshow>
+  {images.map((image, index) => <img src={`${base}/images/${image}`} alt={index === 0 ? title : ''} aria-hidden={index !== 0 ? 'true' : undefined} width="1280" height="720" loading="lazy" class:list={{'is-active': index === 0}} />)}
+</div>
+<style>
+  .project-slideshow img { position:absolute; inset:0; opacity:0; transition:opacity .5s ease; }
+  .project-slideshow img.is-active { opacity:1; }
+  @media (prefers-reduced-motion:reduce) { .project-slideshow img { transition:none; } }
+</style>

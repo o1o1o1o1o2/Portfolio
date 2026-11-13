@@ -1,0 +1,21 @@
+---
+import { copy, type Locale } from '../../survivors/text';
+import '../../survivors/game.css';
+interface Props { lang: Locale; projectsHref?: string }
+const {lang, projectsHref = '#games'} = Astro.props;
+const t = copy[lang];
+---
+<div data-survivor-launcher data-lang={lang} data-projects={projectsHref}>
+  <div class="survivor-launch-actions">
+    <button class="survivor-button survivor-button-game" type="button" data-play>{t.play} <span class="survivor-button-arrow" aria-hidden="true">→</span></button>
+  </div>
+  <p class="survivor-load" role="status"></p>
+  <dialog class="survivor-dialog" aria-label="HR Survivors">
+    <div data-host></div>
+  </dialog>
+</div>
+<script>
+  import { bindGameLaunchers } from '../../survivors/launcher';
+  const dispose = bindGameLaunchers();
+  if (import.meta.hot) import.meta.hot.dispose(dispose);
+</script>

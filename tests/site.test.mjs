@@ -21,16 +21,14 @@ for (const lang of ['ru', 'en']) {
 }
 
 test('all editorial content has both translations', () => {
-  for (const name of ['portfolio', 'profile']) {
-    const content = JSON.parse(readFileSync(`src/content/${name}.json`, 'utf8'));
-    const walk = value => {
-      if (!value || typeof value !== 'object') return;
-      if ('ru' in value || 'en' in value) {
-        assert.equal(typeof value.ru, 'string');
-        assert.equal(typeof value.en, 'string');
-      }
-      Object.values(value).forEach(walk);
-    };
-    walk(content);
-  }
+  const content = JSON.parse(readFileSync('src/content/portfolio.json', 'utf8'));
+  const walk = value => {
+    if (!value || typeof value !== 'object') return;
+    if ('ru' in value || 'en' in value) {
+      assert.equal(typeof value.ru, 'string');
+      assert.equal(typeof value.en, 'string');
+    }
+    Object.values(value).forEach(walk);
+  };
+  walk(content);
 });

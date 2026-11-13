@@ -1,0 +1,88 @@
+{
+  "baseHeight": 44,
+  "animation": {
+    "frequency": 9,
+    "rotation": 0.075,
+    "bob": 1.5,
+    "squash": 0.025
+  },
+  "types": [
+    {
+      "number": 1,
+      "name": "cv-enemy",
+      "texture": "game-atlas",
+      "frame": "concept-2-cv-enemy",
+      "x": 134,
+      "y": 134,
+      "width": 128,
+      "height": 124,
+      "sizeMultiplier": 1
+    },
+    {
+      "number": 2,
+      "name": "calendar-enemy",
+      "texture": "game-atlas",
+      "frame": "concept-1-calendar-enemy",
+      "x": 388,
+      "y": 265,
+      "width": 128,
+      "height": 111,
+      "sizeMultiplier": 1
+    },
+    {
+      "number": 3,
+      "name": "calendar-enemy",
+      "texture": "game-atlas",
+      "frame": "concept-2-calendar-enemy",
+      "x": 134,
+      "y": 262,
+      "width": 128,
+      "height": 117,
+      "sizeMultiplier": 1
+    },
+    {
+      "number": 4,
+      "name": "junior",
+      "texture": "game-atlas",
+      "frame": "concept-2-junior",
+      "x": 791,
+      "y": 2,
+      "width": 117,
+      "height": 128,
+      "sizeMultiplier": 1
+    },
+    {
+      "number": 5,
+      "name": "fullstack-laptop",
+      "texture": "game-atlas",
+      "frame": "concept-1-fullstack-laptop",
+      "x": 2,
+      "y": 134,
+      "width": 128,
+      "height": 124,
+      "sizeMultiplier": 1
+    },
+    {
+      "number": 7,
+      "name": "boss",
+      "texture": "game-atlas",
+      "frame": "concept-2-boss",
+      "x": 1044,
+      "y": 2,
+      "width": 128,
+      "height": 104,
+      "sizeMultiplier": 3
+    },
+    {
+      "number": 6,
+      "name": "hooded-ninja",
+      "texture": "game-atlas",
+      "frame": "concept-2-hooded-ninja",
+      "x": 529,
+      "y": 2,
+      "width": 126,
+      "height": 128,
+      "sizeMultiplier": 1.25
+    }
+  ]
+}

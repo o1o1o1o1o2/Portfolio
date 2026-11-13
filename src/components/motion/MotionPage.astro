@@ -1,0 +1,121 @@
+---
+import portfolio from '../../content/portfolio.json';
+import '../../styles/motion.css';
+import '../../styles/motion-effects.css';
+import KineticLink from '../../components/motion/KineticLink.astro';
+import {copy as survivorCopy} from '../../survivors/text';
+import ExperienceStage from '../../components/motion/ExperienceStage.astro';
+import GameLauncher from './GameLauncher.astro';
+import ProjectVideo from './ProjectVideo.astro';
+import ProjectSlideshow from './ProjectSlideshow.astro';
+import { translator, type Locale } from '../../i18n';
+interface Props { lang?: Locale; }
+const { lang = 'ru' } = Astro.props;
+const t = translator(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/,'');
+const games = portfolio.games;
+const projectStory = {
+  ru: {
+    label: 'Об этом проекте',
+    paragraphs: [
+      'Я сделал это портфолио и игру HR Survivors за два дня. Около полутора дней заняла игра, причём примерно день ушёл на графику и анимации. До этого я не генерировал пиксельные анимации, поэтому сначала разобрался с процессом и подобрал инструменты. Лендинги, TypeScript и Phaser тоже были для меня новыми. Код писал OpenAI Codex с моделью GPT‑6.1 Sol, а графику и анимации я создавал в ComfyUI с помощью моделей, которые запускал локально на своей RTX 5080.',
+      'Я обсуждал с агентом архитектуру проекта, опираясь на общие принципы чистой архитектуры, применимые и в незнакомом стеке. Подсказывал, как организовать данные и какие алгоритмы использовать, и давал советы по оптимизации. Отдельно обращал внимание на то, какие операции игра выполняет каждый кадр.',
+      'В рабочих проектах я использую нейросети как инструмент и оставляю инженерные решения за собой. Здесь цель была быстро собрать портфолио и добавить к нему небольшую шуточную игру о работе рекрутеров. В таком формате вайбкодинг помог быстро довести идею до играбельной версии. При этом я сам решал, где достаточно простого решения, а где важно проверить результат.',
+    ],
+  },
+  en: {
+    label: 'About this project',
+    paragraphs: [
+      'I built this portfolio and HR Survivors in two days. The game took about a day and a half, with roughly a day spent on art and animation. I had never generated pixel art animations before, so I started by learning the workflow and choosing the tools. Landing pages, TypeScript, and Phaser were also new to me. OpenAI Codex wrote the code using GPT‑6.1 Sol, and I created the art and animations in ComfyUI using models running locally on my RTX 5080.',
+      'I discussed the project architecture with the agent, drawing on clean architecture principles that apply even in an unfamiliar stack. I suggested how to organize the data, which algorithms to use, and where to look for performance improvements. I paid particular attention to the work the game does each frame.',
+      'In professional projects, I use AI as a tool and keep responsibility for engineering decisions. Here, my goal was to put together a portfolio quickly and add a small, tongue-in-cheek game about recruiting. Vibe coding helped me turn the idea into a playable game quickly. I decided where a simple solution was sufficient and where the result needed checking.',
+    ],
+  },
+}[lang];
+const backend = portfolio.backend[0];
+const images: Record<string,string> = {'samedi-manor':'samedi.webp','berserk-heroes-online':'berserk-header.jpg','eco-tycoon':'eco.webp','thesia':'thesia-battles.webp'};
+const kinds: Record<string,string> = {'samedi-manor':'IDLE / AUTO-BATTLER','berserk-heroes-online':'COLLECTIBLE CARD GAME','eco-tycoon':'IDLE / TYCOON','thesia':'COLLECTIBLE AUTO-BATTLER'};
+const trailers: Record<string,{video:string;poster:string}> = {
+  'berserk-heroes-online':{video:'/videos/berserk.mp4',poster:'berserk-header.jpg'},
+  'samedi-manor':{video:'/videos/samedi.mp4',poster:'samedi-poster.webp'},
+  'eco-tycoon':{video:'/videos/eco.mp4',poster:'eco-poster.webp'},
+};
+---
+<!doctype html><html lang={lang}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><title>{t('ui0')}</title><link rel="icon" href={`${base}/favicon.svg`}/></head><body>
+<a class="m-skip" href="#main">{t('ui1')}</a>
+<header class="m-header m-wrap" data-intro-panel><a class="m-logo" href="#main">{t('ui2')}</a><span class="m-role">UNITY / C# /<br/>BACKEND DEVELOPER</span><nav aria-label={t('ui69')}><KineticLink label={t('ui64')} href="#games"/><KineticLink label={t('ui12')} href="#backend"/><KineticLink label={t('ui65')} href="#articles"/><KineticLink label="HR Survivors" href="#survivors"/></nav><label class="locale-toggle"><input type="checkbox" role="switch" checked={lang === 'en'} data-locale-switch data-target={`${base}/${lang === 'ru' ? 'en' : 'ru'}/`} aria-label={lang === 'ru' ? 'Английский язык' : 'English language'}/><span class="locale-track" aria-hidden="true"><span class="locale-thumb"></span><span class="locale-option">RU</span><span class="locale-option">EN</span></span></label><KineticLink label={t('ui66')} href="#contact" class="m-talk"/></header>
+<main id="main">
+  <section class="m-intro m-wrap" data-intro-once><div class="intro-label"><span class="tiny-cross">+</span><span>{t('ui3')}</span></div><h1 data-title="chars">{t('ui4')}<br/>{t('ui78')}</h1><div class="intro-about" data-slide="right"><p>{t('ui5')}</p></div></section>
+  <ExperienceStage base={base} lang={lang}/>
+  <section class="m-work m-wrap" id="games" aria-labelledby="work-title"><div class="work-index" data-intro-once><h2 id="work-title" data-title="left">{t('ui7')}</h2><span>{t('ui8')}</span><span>↓</span></div>
+    {games.map((game,i)=><article class:list={['motion-project',`project-${game.id}`]}>
+      <button class="project-stage" data-case={game.id} aria-label={`${lang === 'ru' ? 'Открыть кейс' : 'Open case'} ${game.title}`}>
+        <span class="stage-top"><span>{kinds[game.id]}</span><span>0{i+1} / 04</span></span>
+        {game.id==='thesia'?<ProjectSlideshow images={['thesia-battles.webp','thesia-pvp.webp','thesia-heroes.webp','thesia-hero.webp','thesia-upgrades.webp']} title={game.title} base={base}/>:images[game.id]?<div class="stage-image" data-parallax><img src={`${base}/images/${trailers[game.id]?.poster ?? images[game.id]}`} alt={`${game.title} — ${lang === 'ru' ? 'официальное изображение' : 'official artwork'}`} width="526" height="296" loading={i===0?'eager':'lazy'}/></div>:<div class="thesia-type" aria-hidden="true"><span>Thesia.</span><small>ISEKAI WORLD RPG</small><span class="archive-ring">{t('ui9')}<br/>{t('ui10')}</span></div>}
+        {trailers[game.id]&&<ProjectVideo video={trailers[game.id].video} title={game.title}/>}
+        <span class="stage-action"><span>{t('ui11')}</span><i>↗</i></span>
+      </button>
+      <div class="project-description"><div class="project-caption"><svg class="project-caption-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h19M13 4l8 8-8 8"/></svg><h3 class="project-name"><span data-title="slot">{game.title}</span></h3></div><p data-typewriter>{game.summary[lang]}</p></div>
+    </article>)}
+  </section>
+  <section class="m-engineering" id="backend"><div class="m-wrap"><div class="engineering-heading"><span class="tiny-cross">+</span><span class="m-eyebrow">BEYOND GAMEPLAY / 02</span><h2 data-title="chars">{t('ui12')}<br/><em>{t('ui13')}</em></h2><p data-slide="right">{t('ui14')}<br/>{t('ui15')}</p></div><div class="engineering-content"><div class="engineering-copy" data-slide="left"><span class="m-eyebrow">{t('ui16')}</span><h3>HomeAlone<span>↗</span></h3><p>{backend.summary[lang]}</p><div class="engineering-tags">{[...backend.stack, ...backend.plannedStack].map(tag=><span>{tag}</span>)}</div></div><div class="system-panel" data-slide="right"><div class="system-top"><span>{t('ui19')}</span><span class="pulse-dot"></span></div><div class="system-flow"><div class="system-block"><strong>{t('requestApiDetail')}</strong></div><span class="flow-connector">↓</span><div class="system-block active"><strong>{t('requestServiceDetail')}</strong><div class="signal"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="flow-connector">↓</span><div class="system-block"><small>{t('ui22')}</small><strong>{t('requestStorageDetail')}</strong></div></div><div class="system-bottom">{t('ui23')}</div></div></div></div></section>
+  <section class="m-articles m-wrap" id="articles"><div class="articles-heading"><span class="m-eyebrow">{t('ui24')}</span><h2 data-title="mixed">{t('ui25')}<br/><em>{t('ui26')}</em></h2></div><a class="motion-article" href={portfolio.articles[0].url} target="_blank" rel="noopener noreferrer"><div class="article-art" aria-hidden="true"><span class="article-wire">▧</span><span>VOXEL<br/>RENDERING</span><small>CPU → GPU / UNITY</small></div><div class="motion-article-copy"><span class="m-eyebrow">{t('ui27')}</span><h3 data-title="chars">{portfolio.articles[0].title.ru}</h3><span class="article-read">{t('ui28')}<span>↗</span></span></div></a></section>
+  <section class="m-profile m-wrap" id="profile" aria-labelledby="profile-title" data-row-reveal="up">
+    <h2 class="m-eyebrow" id="profile-title">{t('experienceHeading')}</h2>
+    <dl class="m-profile-grid">
+      <div class="m-profile-metric" data-reveal-row><dt>6+</dt><dd>{t('experienceYears')}</dd></div>
+      <div class="m-profile-metric" data-reveal-row><dt>4</dt><dd>{t('experienceProjects')}</dd></div>
+      <div class="m-profile-metric" data-reveal-row><dt aria-label={t('experienceOwnership')}><span aria-hidden="true">→</span></dt><dd>{t('experienceOwnership')}<br/>{t('experienceOwnershipDetail')}</dd></div>
+      <div class="m-profile-metric" data-reveal-row><dt aria-label={t('experienceLearning')}><span aria-hidden="true">∞</span></dt><dd>{t('experienceLearning')}</dd></div>
+      <div class="m-profile-metric m-profile-ai" data-reveal-row>
+        <dt aria-label={t('experienceAi')}><span aria-hidden="true">AI</span></dt>
+        <dd>{t('experienceAi')}<br/><s>{t('experienceVibeCoding')}</s>, <a href="#survivors" aria-label={t('experienceGameLink')}>{t('experienceGameLinkText')}</a></dd>
+      </div>
+    </dl>
+  </section>
+  <section class="m-contact m-wrap" id="contact"><div><span class="m-eyebrow">{t('ui38')}</span><h2 data-title="lines"><span data-title-line>{t('ui39')}</span><em data-title-line>{t('ui40')}</em></h2></div><div class="contact-side"><p>Unity / C# · Go<br/>{t('ui41')}</p><KineticLink label="GitHub" href="https://github.com/o1o1o1o1o2" external/><KineticLink label="Хабр" href="https://habr.com/ru/users/o1o1o1o1o2/" external/></div></section>
+  <section class="survivor-expansion" id="survivors" data-expansion aria-labelledby="survivor-heading">
+    <div class="expansion-sticky">
+      <div class="expansion-copy">
+        <h2 id="survivor-heading" data-title="lines" data-line-direction="right"><span data-title-line>HR</span><em data-title-line>Survivors</em></h2>
+        <p>{survivorCopy[lang].teaser}</p>
+        <button type="button" class="survivor-project-link" data-case="survivors" aria-haspopup="dialog" aria-controls="case-survivors">
+          {projectStory.label} <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+      <div class="expanding-screen" data-expanding-screen style={`--survivor-cover: url('${base}/images/hr-survivors-cover-wide.png')`}>
+        <img class="survivor-preview-field" src={`${base}/images/hr-survivors-cover-wide.png`} alt="" loading="lazy" width="1836" height="856" />
+        <div class="survivor-preview-launch"><GameLauncher lang={lang}/></div>
+      </div>
+    </div>
+  </section>
+</main><footer class="m-footer m-wrap"><span>{t('ui43')}</span><a href="#main">{t('ui44')}</a></footer>
+{games.map(game=><dialog id={`case-${game.id}`} class="case-dialog" aria-labelledby={`case-title-${game.id}`}><div class="case-panel" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="case-inner"><form method="dialog"><button class="case-close" aria-label={t('ui71')}>{t('ui45')}</button></form><span class="m-eyebrow">{t('ui46')}</span><h2 id={`case-title-${game.id}`}>{game.title}</h2><p>{game.summary[lang]}</p>{game.contributions.length>0&&<ul>{game.contributions.map(c=><li>{c[lang]}</li>)}</ul>}<div class="case-links">{game.links.map(link=><a href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div></div></dialog>)}
+<dialog id="case-survivors" class="case-dialog" aria-labelledby="case-title-survivors">
+  <div class="case-panel" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="case-inner">
+    <form method="dialog"><button class="case-close" aria-label={t('ui71')}>{t('ui45')}</button></form>
+    <h2 id="case-title-survivors">{projectStory.label}</h2>
+    {projectStory.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+  </div>
+</dialog>
+<style>
+  .survivor-project-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: .875rem;
+    text-decoration: underline;
+    text-underline-offset: .25em;
+  }
+</style>
+<script>
+  import { mountPortfolioMotion } from '../../motion';
+  import { bindLanguageSwitch } from '../../i18n/navigation';
+  const language=document.documentElement.lang;
+  try { localStorage.setItem('portfolio-language',language); } catch {}
+  const stopLanguage = bindLanguageSwitch();
+  const dispose = mountPortfolioMotion();
+  if (import.meta.hot) import.meta.hot.dispose(() => { dispose(); stopLanguage(); });
+</script></body></html>
+

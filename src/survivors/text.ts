@@ -1,0 +1,36 @@
+export type Locale = 'ru' | 'en';
+
+export const copy = {
+  ru: {
+    score: 'Очки', totalScore: 'Заработано очков',
+    toGame: 'К игре',
+    bossTest: 'Босс',
+    play: 'Играть', stress: 'Стресс-тест', enemies: 'Враги', close: 'Выйти', pause: 'Пауза', resume: 'Продолжить',
+    intro: 'Продержись пять минут и победи Идеального кандидата. Отказы отправляются автоматически. Жёлтые кристаллы дают больше опыта.',
+    bossRemaining: 'Победи Идеального кандидата',
+    controls: 'WASD / стрелки — движение\nЛКМ / палец — удерживай и веди\nEsc — пауза\n«Выйти» — закончить забег',
+    start: 'Начать забег', mood: 'Настроение', level: 'Уровень',
+    upgrade: 'Выбери улучшение', boss: 'Идеальный кандидат',
+    won: 'Вакансия закрыта!', lost: 'КОНЕЦ ИГРЫ',
+    wonDetail: 'Поток откликов выдержан. Идеальный кандидат подобран.',
+    lostDetail: 'Мы взяли не того.',
+    retry: 'Ещё раз', projects: 'Посмотреть проекты', error: 'Не удалось запустить игру.',
+    teaser: 'Пять минут в офисе. Уклоняйся от кандидатов и прокачивай автоматические отказы.',
+  },
+  en: {
+    score: 'Score', totalScore: 'Points earned',
+    toGame: 'Back to game',
+    bossTest: 'Boss test',
+    play: 'Play', stress: 'Stress test', enemies: 'Enemies', close: 'Exit', pause: 'Pause', resume: 'Resume',
+    intro: 'Survive five minutes and defeat the Ideal Candidate. Rejections fire automatically. Gold gems give more XP.',
+    bossRemaining: 'Defeat the Ideal Candidate',
+    controls: 'WASD / arrows — move\nHold LMB / drag with a finger — move\nEsc — pause\nExit — end the run',
+    start: 'Start run', mood: 'Mood', level: 'Level',
+    upgrade: 'Choose an upgrade', boss: 'The Ideal Candidate',
+    won: 'Vacancy filled!', lost: 'GAME OVER',
+    wonDetail: 'You survived the applications and defeated the Ideal Candidate.',
+    lostDetail: 'We got the wrong guy.',
+    retry: 'Try again', projects: 'See projects', error: 'Could not start the game.',
+    teaser: 'Five minutes in the office. Dodge candidates and upgrade your automatic rejections.',
+  },
+} as const;

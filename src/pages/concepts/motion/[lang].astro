@@ -1,0 +1,6 @@
+---
+import MotionPage from '../../../components/motion/MotionPage.astro';
+export function getStaticPaths() { return ['ru','en'].map(lang => ({params:{lang}})); }
+const lang=Astro.params.lang as 'ru'|'en';
+---
+<MotionPage lang={lang}/>

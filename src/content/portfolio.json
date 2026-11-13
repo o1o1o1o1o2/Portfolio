@@ -11,16 +11,17 @@
       "id": "berserk-heroes-online",
       "title": "Berserk Heroes Online",
       "summary": {
-        "ru": "Коллекционная карточная игра. Разработка игровых систем, интерфейсов и инструментов.",
-        "en": "A collectible card game. Work on game systems, interfaces and development tools."
+        "ru": "Онлайн-ККИ по настольной игре «Берсерк. Герои». Сбор колод и пошаговые дуэли в фэнтезийном мире Лаара.",
+        "en": "An online CCG based on the Berserk Heroes tabletop game, with deck building and turn-based duels in the fantasy world of Laar."
       },
       "contributions": [
-        { "ru": "Гибкая система UI для интеграции новых интерфейсов.", "en": "A flexible UI system for integrating new interfaces." },
-        { "ru": "Battle Pass, рейтинговая арена и игровые события.", "en": "Battle Pass, ranked arena and in-game events." },
-        { "ru": "Симулятор боёв с пользовательской статистикой для балансировки персонажей.", "en": "A battle simulator with custom statistics for character balancing." },
-        { "ru": "Интеграции аутентификации, платежей, рекламы и аналитики; работа с сетевой синхронизацией.", "en": "Authentication, payment, advertising and analytics integrations; work on network synchronization." }
+        { "ru": "Разрабатывал игровые системы, механики и инструменты; проектировал архитектуру подсистем.", "en": "Developed game systems, mechanics and tools; designed subsystem architecture." },
+        { "ru": "Спроектировал и реализовал гибкую систему UI.", "en": "Designed and implemented a flexible UI system." },
+        { "ru": "Разработал боевой пропуск, рейтинговую PvP-арену и внутриигровые события.", "en": "Developed the Battle Pass, ranked PvP arena and in-game events." },
+        { "ru": "Интегрировал аутентификацию, внешние API и SDK, платежи через Google Play, App Store и RuStore.", "en": "Integrated authentication, external APIs and SDKs, and payments through Google Play, the App Store and RuStore." }
       ],
       "links": [
+        { "kind": "store", "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.hw.bho&hl=ru" },
         { "kind": "store", "label": "Steam", "url": "https://store.steampowered.com/app/4926310/Berserk_Heroes_Online/" },
         { "kind": "video", "label": "YouTube", "url": "https://www.youtube.com/watch?v=N2gKkAwR6PI" }
       ],
@@ -63,11 +64,20 @@
       "id": "thesia",
       "title": "Thesia: Isekai World RPG",
       "summary": {
-        "ru": "Коллекционная RPG. Архивный проект; сохранилось видео игрового процесса.",
-        "en": "A hero-collecting RPG. An archive project with surviving gameplay footage."
+        "ru": "Коллекционный автобатлер. Архивный проект; сохранилось видео игрового процесса.",
+        "en": "A collectible auto-battler. An archive project with surviving gameplay footage."
       },
       "status": "archive",
-      "contributions": [],
+      "contributions": [
+        { "ru": "Разрабатывал и поддерживал основные игровые системы, механики и инструменты. Проектировал архитектуру новых подсистем и участвовал в её развитии.", "en": "Developed and maintained core game systems, mechanics and tools. Designed new subsystems and helped evolve the architecture." },
+        { "ru": "Спроектировал и реализовал гибкую систему UI, которая ускорила интеграцию новых экранов для геймдизайнеров и художников.", "en": "Designed and built a flexible UI system that helped designers and artists integrate new screens faster." },
+        { "ru": "Разработал и внедрил боевой пропуск, рейтинговую PvP-арену и внутриигровые события.", "en": "Built and shipped the Battle Pass, ranked PvP arena and in-game events." },
+        { "ru": "Создал внутренний симулятор боёв со сбором и обработкой статистики для автоматизации балансировки персонажей.", "en": "Built an internal battle simulator that collected and processed statistics to automate character balancing." },
+        { "ru": "Интегрировал аутентификацию, внешние API и SDK, а также платежи через Google Play, App Store и RuStore.", "en": "Integrated authentication, external APIs and SDKs, and payments through Google Play, the App Store and RuStore." },
+        { "ru": "Оптимизировал сетевое взаимодействие и производительность, устранил критические ошибки синхронизации и настроил диагностику через Crashlytics.", "en": "Optimized networking and performance, fixed critical synchronization issues and set up diagnostics with Crashlytics." },
+        { "ru": "Интегрировал рекламную монетизацию через AppLovin MAX и аналитику через AppsFlyer, AppMetrica и Яндекс Метрику.", "en": "Integrated ad monetization through AppLovin MAX and analytics through AppsFlyer, AppMetrica and Yandex Metrica." },
+        { "ru": "Рефакторил существующий код, участвовал в ревью и помогал новым сотрудникам освоить проект.", "en": "Refactored existing code, reviewed changes and helped onboard new team members." }
+      ],
       "links": [
         { "kind": "video", "label": "YouTube", "url": "https://www.youtube.com/watch?v=QWBxNgJqZQY" }
       ],
@@ -81,8 +91,8 @@
       "status": "in-development",
       "projectType": { "ru": "Личный проект", "en": "Personal project" },
       "summary": {
-        "ru": "Go-бэкенд приложения для организации встреч и поиска компании. HTTP API для пользователей и мероприятий, PostgreSQL и модульная организация серверной логики.",
-        "en": "A Go backend for organizing meetups and finding people to join. HTTP APIs for users and activities, PostgreSQL and a modular server architecture."
+        "ru": "Разрабатываю бэкенд социального приложения нового формата на Go. Сервер предоставляет REST API по HTTP, а данные хранит в PostgreSQL.",
+        "en": "I’m developing a Go backend for a new kind of social app. The server exposes a REST API over HTTP and stores data in PostgreSQL."
       },
       "contributions": [
         {
@@ -90,8 +100,8 @@
           "en": "Feature modules separating HTTP transport, service logic and repositories, with storage dependencies defined through interfaces."
         },
         {
-          "ru": "HTTP API для создания, чтения, изменения и удаления пользователей и мероприятий; фильтрация и пагинация списков мероприятий.",
-          "en": "HTTP APIs for creating, reading, updating and deleting users and activities, with filtering and pagination for activity lists."
+          "ru": "REST API с фильтрацией и пагинацией.",
+          "en": "A REST API with filtering and pagination."
         },
         {
           "ru": "Работа с PostgreSQL через pgx: параметризованные запросы, пул подключений, ограничения целостности и SQL-миграции.",
@@ -102,11 +112,12 @@
           "en": "Context propagation and database operation timeouts, zap logging, Swagger API documentation and a local Docker Compose environment."
         }
       ],
-      "stack": ["Go", "HTTP", "REST API", "PostgreSQL", "pgx", "SQL", "Docker Compose", "zap", "Swagger"],
+      "stack": ["Go", "HTTP", "REST API", "PostgreSQL", "pgx", "SQL", "Docker", "Docker Compose", "zap", "Swagger"],
+      "plannedStack": ["gRPC", "Redis", "Apache Kafka", "OpenStreetMap"],
       "roadmap": [
-        { "ru": "Отдельный сервис аутентификации и проверка сессий через gRPC.", "en": "A separate authentication service with gRPC session checks." },
-        { "ru": "Kafka для событий регистрации и фоновой обработки; outbox и идемпотентные потребители.", "en": "Kafka for registration events and background processing, with an outbox and idempotent consumers." },
-        { "ru": "Интеграция Redis и поиск мероприятий на карте.", "en": "Redis integration and map-based activity search." }
+        { "ru": "Межсервисное взаимодействие через gRPC.", "en": "Service-to-service communication over gRPC." },
+        { "ru": "Асинхронная обработка событий через Apache Kafka с outbox и идемпотентными потребителями.", "en": "Asynchronous event processing through Apache Kafka with an outbox and idempotent consumers." },
+        { "ru": "Интеграции Redis и OpenStreetMap.", "en": "Redis and OpenStreetMap integrations." }
       ],
       "links": [],
       "cover": null

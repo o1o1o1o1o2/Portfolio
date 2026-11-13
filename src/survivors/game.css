@@ -1,0 +1,269 @@
+.survivor-feature {
+  display:flex; justify-content:space-between; align-items:center; gap:24px;
+  padding:clamp(24px,5vw,64px); margin-bottom:48px; border-radius:20px;
+  background:#24243f; color:#f6efff;
+}
+.survivor-feature h2 { margin:0 0 8px; font-size:clamp(28px,5vw,64px); line-height:1.02; }
+.survivor-feature p { margin:0; max-width:38ch; color:#d2c8e8; line-height:1.55; }
+.survivor-button { border:0; padding:9px 14px; border-radius:8px; background:#e9dcff; color:#271a3d; font:600 14px system-ui; cursor:pointer; }
+.survivor-button:disabled { opacity:.5; cursor:default; }
+.survivor-button,.survivor-button:focus,.survivor-button:focus-visible,
+[data-play],[data-play]:focus,[data-play]:focus-visible { outline:none; }
+.survivor-launch-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
+.survivor-button-secondary { background:#3c3058; color:#f8edff; }
+.survivor-dialog { box-sizing:border-box; width:calc(100% - 24px); height:calc(100dvh - 48px); max-width:none; max-height:none; padding:0; border:1px solid #7c6096; border-radius:8px; background:#211c33; color:#f8edff; overflow:hidden; }
+.survivor-dialog[open] { display:grid; grid-template-rows:minmax(0,1fr); }
+.survivor-dialog [data-host] { min-height:0; }
+.survivor-dialog::backdrop { background:#0e0c19d9; }
+.survivor-status, .survivor-panel, .survivor-load { font-family:system-ui,sans-serif; }
+.survivor-load:empty { display:none; }
+.survivor-run { position:relative; width:100%; height:100%; overflow:hidden; }
+.survivor-surface { position:absolute; inset:0; touch-action:none; background:#17152a; }
+.survivor-surface canvas { display:block; image-rendering:pixelated; }
+.survivor-hud { position:absolute; z-index:1; inset:8px 8px auto; display:flex; flex-wrap:wrap; align-items:center; gap:7px; pointer-events:none; }
+.survivor-hud .survivor-button { margin-left:auto; pointer-events:auto; }
+.survivor-mood, .survivor-xp { width:clamp(52px,14vw,155px); height:12px; accent-color:#73d5ff; }
+.survivor-mood::-webkit-meter-optimum-value { background:#f660ad; }
+.survivor-status { font-size:12px; font-weight:700; padding:4px 7px; border-radius:5px; background:#18152ce6; }
+.survivor-run-stats { position:absolute; z-index:1; top:8px; left:50%; transform:translateX(-50%); display:grid; justify-items:center; gap:4px; pointer-events:none; }
+.survivor-score { padding:4px 9px; border:1px solid #8a637e; border-radius:5px; background:#2c203ae6; color:#ffe0a0; font:800 13px system-ui,sans-serif; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.survivor-time { padding:3px 8px; border-radius:4px; background:#18152ce6; color:#eee0f5; font:700 13px system-ui,sans-serif; font-variant-numeric:tabular-nums; }
+.survivor-end-score { display:grid; justify-items:center; gap:5px; margin:22px 0; color:#e3c7df; font-size:14px; }
+.survivor-end-score strong { color:#ffe0a0; font-size:clamp(30px,5vw,48px); line-height:1.1; font-variant-numeric:tabular-nums; text-shadow:2px 2px #8e386b; }
+.survivor-boss { display:grid; justify-items:center; gap:4px; width:100%; font:700 12px system-ui,sans-serif; text-shadow:0 1px 3px #120d1d; }
+.survivor-boss[hidden] { display:none; }
+.survivor-boss-health { width:min(78%,660px); height:14px; accent-color:#ff647c; }
+.survivor-controls { position:absolute; left:12px; bottom:10px; z-index:1; margin:0; color:#f4ebffd0; white-space:pre-line; text-align:center; pointer-events:none; text-shadow:0 1px 3px #100b19; font:500 11px/1.45 system-ui,sans-serif; }
+.survivor-overlay { position:absolute; z-index:2; inset:0; display:grid; place-items:center; padding:8px; background:#161225b0; }
+.survivor-overlay[hidden], .survivor-stick[hidden] { display:none; }
+.survivor-confirm { position:absolute; inset:0; display:grid; place-items:center; padding:12px; background:#161225b0; }
+.survivor-confirm-panel { width:min(100%,360px); }
+.survivor-panel { max-height:100%; width:min(100%,760px); overflow:auto; overscroll-behavior:contain; padding:clamp(10px,3vw,24px); border:1px solid #8769b9; border-radius:14px; background:#27213bf5; text-align:center; }
+.survivor-panel h3 { margin:0 0 8px; font-size:clamp(20px,3.5vw,38px); }
+.survivor-panel p { margin:6px 0 12px; color:#ded3f4; font-size:clamp(12px,1.8vw,17px); }
+.survivor-panel > .survivor-button { margin:3px; }
+.survivor-panel-lost,.survivor-panel-won { text-align:center; }
+.survivor-panel-lost > h3,.survivor-panel-won > h3 {
+  margin:0 0 14px; color:#ff6584; font-size:clamp(30px,5vw,52px);
+  line-height:1.1; font-weight:900; letter-spacing:.025em; text-align:center;
+  text-shadow:2px 3px 0 #09070e,4px 5px 0 #09070e;
+}
+.survivor-panel-won > h3 { color:#fff0cb; text-shadow:1px 2px 0 #a44479,2px 3px 0 #512747; }
+.survivor-panel-lost > p,.survivor-panel-won > p { margin:0 0 22px; max-width:none; color:#f7edf9; font-size:clamp(16px,2.2vw,22px); text-align:center; }
+.survivor-end-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:24px; padding-bottom:5px; }
+.survivor-panel-upgrade { width:min(100%,1280px); padding:26px 30px 30px; text-align:left; background:radial-gradient(at 50% 100%,#49305055,transparent 70%),#241c32; }
+.survivor-panel-upgrade:focus { outline:none; }
+.survivor-upgrade-eyebrow { display:block; margin-bottom:6px; font:11px monospace; letter-spacing:2px; color:#bca1ce; }
+.survivor-panel-upgrade > h3 { margin:6px 0 4px; font-size:22px; color:#ffe4b1; text-shadow:none; }
+.survivor-panel-upgrade > .survivor-upgrade-caption { font-size:13px; color:#bba9c8; margin:0 0 32px; }
+.survivor-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; padding:0 7px 10px 0; }
+.survivor-card {
+  position:relative; display:grid; grid-template-rows:auto 95px auto minmax(40px,1fr) auto; gap:0;
+  min-width:0; padding:18px 20px 16px; border:0; border-radius:2px;
+  background:#f1e4cd; color:#3a2b44; box-shadow:4px 5px #846581,7px 9px #110e1a;
+  text-align:left; font:14px/1.35 system-ui,sans-serif; cursor:pointer;
+  transition:transform .16s,box-shadow .16s;
+}
+.survivor-card:hover,.survivor-card:focus-visible { transform:translateY(-5px); box-shadow:4px 5px #ec72a5,7px 13px #110e1a; outline:2px solid #e98cbb; outline-offset:3px; }
+.survivor-card:active { transform:translateY(1px); }
+.survivor-card-tab { position:absolute; left:0; top:-13px; border-radius:6px 6px 0 0; padding:4px 14px; background:#e9d8ba; font:9px/1.2 monospace; }
+.survivor-card-top { display:flex; justify-content:space-between; gap:8px; font:11px/1.4 monospace; letter-spacing:1px; }
+.survivor-card-level { color:#a13967; white-space:nowrap; font-size:12px; }
+.survivor-card-art { display:flex; align-items:center; justify-content:center; background:repeating-linear-gradient(transparent 0 23px,#79627c17 23px 24px); }
+.survivor-card-art > canvas,.survivor-card-art > svg,.survivor-card-art > img { width:90px !important; height:75px !important; max-width:70%; object-fit:contain; image-rendering:pixelated; }
+.survivor-card-search { position:relative; display:block; width:90px; height:75px; }
+.survivor-card-search > svg { display:block; width:100%; height:100%; }
+.survivor-card-search > img { position:absolute; width:25px; height:25px; left:25px; top:17px; image-rendering:pixelated; }
+.survivor-card-art > .survivor-guide-mood { width:54px !important; height:54px !important; }
+.survivor-card-seal { position:absolute; right:15px; top:70px; transform:rotate(-12deg); border:2px solid #ba416c; color:#ba416c; padding:5px; font:800 12px/1.1 monospace; pointer-events:none; opacity:0; transition:opacity .12s; }
+.survivor-card:hover .survivor-card-seal { opacity:1; }
+@media(hover:none) { .survivor-card:active .survivor-card-seal { opacity:1; } }
+.survivor-card-name { font-size:21px; line-height:1.2; margin:8px 0 10px; }
+.survivor-card-detail { color:#6d596e; font-size:13px; line-height:1.5; min-height:40px; }
+.survivor-card-metrics { display:flex; justify-content:center; align-items:center; gap:clamp(4px,1vw,14px); border-top:1px dashed #a18a9a; padding-top:12px; margin-top:18px; }
+.survivor-card-metric { display:inline-flex; align-items:center; gap:3px; font:700 clamp(10px,1.2vw,15px)/1.35 system-ui,sans-serif; color:#3a2b44; white-space:nowrap; }
+.survivor-card-metric-icon { color:#a13967; width:21px; height:21px; display:block; flex-shrink:0; }
+.survivor-card-metric-damage { color:#be243b; }
+.survivor-card-metric b { display:flex; align-items:center; line-height:21px; }
+@media(max-width:620px) {
+  .survivor-cards { grid-template-columns:1fr; gap:28px; }
+  .survivor-card { grid-template-columns:68px minmax(0,1fr); grid-template-rows:auto auto auto auto; padding:14px; gap:6px 12px; }
+  .survivor-card-top,.survivor-card-metrics { grid-column:1/-1; }
+  .survivor-card-art { grid-column:1; grid-row:2/4; min-height:76px; }
+  .survivor-card-name,.survivor-card-detail { grid-column:2; }
+  .survivor-card-name { font-size:17px; padding-right:14px; }
+  .survivor-card-detail { font-size:12px; min-height:0; }
+  .survivor-card-seal { right:8px; top:-13px; font-size:8px; background:#f1e4cd; }
+  .survivor-panel-upgrade { padding:18px; }
+}
+@media(max-height:560px) and (min-width:621px) {
+  .survivor-card { grid-template-rows:auto 58px auto 1fr auto; gap:6px; padding:12px; }
+  .survivor-card-art > canvas,.survivor-card-art > svg,.survivor-card-art > img { height:56px !important; }
+  .survivor-card-seal { top:50px; font-size:8px; }
+  .survivor-card-name { font-size:17px; }
+  .survivor-card-detail { font-size:11px; min-height:0; }
+  .survivor-card-metrics { gap:3px; padding-top:6px; margin-top:2px; }
+}
+@media(prefers-reduced-motion:reduce) { .survivor-card { transition:none; } }
+.survivor-stick { position:absolute; z-index:1; width:66px; height:66px; transform:translate(-50%,-50%); border:1px solid #d4c7f1aa; border-radius:50%; background:#291a4a77; pointer-events:none; }
+.survivor-knob { position:absolute; width:22px; height:22px; left:21px; top:21px; border-radius:50%; background:#ebd8fdab; }
+.survivor-button-game {
+  padding:10px 22px; border:2px solid #ffe6af; border-radius:5px;
+  background:linear-gradient(135deg,#ffefc7,#efccf0); color:#321f42;
+  box-shadow:3px 3px 0 #b53e80; font-weight:800; letter-spacing:.03em;
+  transition:transform .15s,box-shadow .15s;
+}
+.survivor-button-game:hover,.survivor-button-game:focus-visible { transform:translate(-1px,-1px); box-shadow:4px 4px 0 #ce5094; }
+.survivor-button-game:active { transform:translate(2px,2px); box-shadow:1px 1px 0 #b53e80; }
+.survivor-button-exit { background:linear-gradient(135deg,#ef6a83,#c92c55); border-color:#ffadc0; color:#fff5f8; box-shadow:3px 3px 0 #761e45; }
+.survivor-button-exit:hover,.survivor-button-exit:focus-visible { box-shadow:4px 4px 0 #761e45; }
+.survivor-button-arrow { display:inline-block; transform:rotate(-45deg); transition:transform .22s ease; }
+[data-play]:hover .survivor-button-arrow,[data-play]:focus-visible .survivor-button-arrow { transform:rotate(0); }
+.survivor-panel-guide {
+  box-sizing:border-box; width:min(100%,1500px); height:100%; max-height:100%;
+  display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:clamp(10px,2cqh,18px);
+  padding:12px 18px; overflow:hidden; container-type:size;
+  background:radial-gradient(ellipse at top right,#49306170,transparent 60%),#211b32;
+}
+.survivor-panel-guide > h3 {
+  margin:0; font-size:clamp(18px,3.7cqh,30px); text-align:left;
+  color:#fff0cb; text-shadow:1px 2px 0 #a44479,2px 3px 0 #512747;
+}
+.survivor-guide {
+  display:grid; grid-template-rows:minmax(80px,.65fr) 1.6fr 1.6fr; gap:clamp(10px,2cqh,18px); min-height:0;
+  text-align:left; font-size:clamp(10px,1.65cqh,14px); line-height:1.25;
+}
+.survivor-guide h4,.survivor-guide h5,.survivor-guide p { margin:0; }
+.survivor-guide h4 { font-size:clamp(12px,2.1cqh,17px); color:#ffe4a9; }
+.survivor-guide h5 { font-size:clamp(10px,1.8cqh,15px); line-height:1.15; color:#ffdba2; text-align:center; }
+.survivor-panel-guide .survivor-guide p { max-width:none; font-size:inherit; line-height:1.25; color:#d6cce5; }
+.survivor-guide-intro {
+  display:grid; grid-template-columns:88px minmax(0,1fr); align-items:center; gap:12px; min-height:0;
+  border-left:3px solid #e575bb; padding:4px 10px; background:#44304f66;
+}
+.survivor-guide-intro > div:last-child { display:grid; gap:3px; }
+.survivor-guide .survivor-guide-controls { color:#ad9cc3; font-size:.9em; }
+.survivor-guide-section { display:grid; grid-template-rows:auto minmax(0,1fr); gap:clamp(9px,1.8cqh,16px); min-height:0; }
+.survivor-guide-section:has(.survivor-guide-enemies) { grid-template-rows:auto minmax(0,1fr); }
+.survivor-guide .survivor-guide-note { font-size:.85em; color:#b4a5c9; }
+.survivor-guide-enemies,.survivor-guide-pickups {
+  display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:6px; min-height:0; align-content:start;
+}
+.survivor-guide-enemy,.survivor-guide-pickup { display:flex; flex-direction:column; align-items:center; gap:5px; min-width:0; }
+.survivor-guide-enemy-visual,.survivor-guide-pickup-visual {
+  box-sizing:border-box; width:min(100%,24cqh); aspect-ratio:1; position:relative; flex-shrink:0;
+  border:1px solid #80628e; border-radius:6px; overflow:hidden;
+  background:linear-gradient(155deg,#50315355,#2c223b);
+}
+.survivor-guide-enemy:last-child .survivor-guide-enemy-visual { border-color:#e67ab0; background:linear-gradient(150deg,#793849,#482339); }
+.survivor-guide-art { display:flex; align-items:center; justify-content:center; min-height:0; min-width:0; height:100%; }
+.survivor-guide-enemy-visual > .survivor-guide-art { position:absolute; inset:6px 34px 24px 0; height:auto; }
+.survivor-guide-pickup-visual > .survivor-guide-art { position:absolute; inset:20px 8px 24px; height:auto; }
+.survivor-guide-enemy-visual > h5,.survivor-guide-pickup-visual > h5 { position:absolute; left:4px; right:4px; bottom:5px; font-size:clamp(10px,1.8cqh,14px); }
+.survivor-guide-pickup-visual > .survivor-guide-pickup-icon { bottom:32px; }
+.survivor-guide-pickup-icon > canvas { width:62% !important; height:78% !important; position:relative; z-index:1; }
+.survivor-guide-vfx { position:absolute; inset:0; pointer-events:none; }
+.survivor-guide-vfx > i { position:absolute; left:50%; top:50%; }
+.survivor-guide-effect-magnet .survivor-guide-gem {
+  width:12px; height:15px; border-width:1px;
+  --angle:calc(var(--particle) * 60deg);
+  animation:survivor-guide-attract 2.4s linear infinite;
+  animation-delay:calc(var(--particle) * -.4s);
+}
+.survivor-guide-blast {
+  width:34px; height:34px; margin:-17px; border:2px solid #ff87bb;
+  border-radius:50%; background:#f5629e22;
+  animation:survivor-guide-explode 2.4s ease-out infinite;
+  animation-delay:calc(var(--particle) * -1.2s);
+}
+@keyframes survivor-guide-attract {
+  0% { transform:rotate(var(--angle)) translateX(62px) rotate(45deg); opacity:0; }
+  12% { opacity:1; }
+  85%,100% { transform:rotate(var(--angle)) translateX(0) rotate(45deg) scale(.35); opacity:0; }
+}
+@keyframes survivor-guide-explode {
+  0% { transform:scale(.4); opacity:.9; }
+  80%,100% { transform:scale(3.6); opacity:0; }
+}
+.survivor-guide-sprite { display:block; flex-shrink:1; max-width:100%; max-height:100%; object-fit:contain; }
+.survivor-guide-procedural { display:block; width:60px; height:100%; max-width:100%; object-fit:contain; image-rendering:pixelated; }
+.survivor-guide-stats {
+  position:absolute; top:4px; right:2px; bottom:25px; width:30px; margin:0;
+  display:flex; flex-direction:column; align-items:center; gap:clamp(3px,.6cqh,5px);
+}
+.survivor-guide-stats > div { display:grid; grid-template-rows:12px auto; justify-items:center; gap:0; min-height:0; }
+.survivor-guide-stats dt { display:flex; align-items:center; justify-content:center; width:24px; height:12px; font-size:13px; }
+.survivor-guide-stats dd { margin:0; color:#ffcfda; font-size:10px; line-height:1.05; font-weight:700; white-space:nowrap; }
+.survivor-guide-stats dt { transform:translateY(-1px); }
+.survivor-guide-stats dt:has(.survivor-guide-heart) { transform:translateY(2px); }
+.survivor-guide-stats .survivor-guide-procedural { width:20px; }
+.survivor-guide-stats .survivor-guide-lasers { width:18px; }
+.survivor-guide-heart { color:#ff91b9; }
+.survivor-guide-mood { width:14px; height:14px; flex:none; }
+.survivor-guide-pickup-value { position:absolute; top:5px; right:5px; display:flex; align-items:center; gap:4px; color:#fff1c1; font-size:clamp(12px,2cqh,17px); font-weight:800; text-shadow:0 1px 3px #120c20; }
+.survivor-guide-pickup > p { align-self:stretch; font-size:.9em; }
+.survivor-guide-gem { width:26px; height:32px; transform:rotate(45deg); border:2px solid #e1fbff; border-radius:3px; background:linear-gradient(110deg,#a8f0ff 48%,#4fb3d2 50%); }
+.survivor-guide-gem-gold { background:linear-gradient(110deg,#ffe186 48%,#dca126 50%); border-color:#fff2aa; }
+.survivor-guide-gem-red { background:linear-gradient(110deg,#ffb0c5 48%,#ed3267 50%); border-color:#ffd8e4; }
+.survivor-guide-orb { width:14px; height:14px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffd6df 0 20%,#ff446e 30% 65%,#ff276b44 70%); box-shadow:0 0 8px #ff276b66; }
+.survivor-guide-lasers { width:24px; height:3px; background:#fff1f5; box-shadow:0 0 0 2px #ff497c,0 0 8px 3px #ff226666; transform:rotate(-20deg); }
+.survivor-guide-actions { display:flex; justify-content:flex-end; align-items:center; gap:12px; border-top:1px solid #755684; padding:8px 3px 3px; }
+.survivor-guide-tabs { display:none; }
+@media(max-width:980px) {
+  .survivor-panel-guide { padding:10px; }
+  .survivor-guide { grid-template-rows:auto auto minmax(0,1fr); font-size:11px; }
+  .survivor-guide-intro { grid-template-columns:56px minmax(0,1fr); gap:8px; }
+  .survivor-guide-intro .survivor-guide-controls { display:none; }
+  .survivor-guide-tabs { display:flex; gap:4px; }
+  .survivor-guide-tabs button { flex:1; border:1px solid #80628e; border-radius:5px; padding:7px 3px; background:#31243f; color:#dfd0ed; font:600 11px system-ui; }
+  .survivor-guide-tabs button[aria-pressed="true"] { background:#684268; color:#fff0d0; border-color:#e69bbc; }
+  .survivor-guide [data-guide-section] { display:none; }
+  .survivor-guide[data-guide-tab="enemies"] [data-guide-section="enemies"],
+  .survivor-guide[data-guide-tab="pickups"] [data-guide-section="pickups"] { display:grid; }
+  .survivor-guide-enemies,.survivor-guide-pickups { grid-template-columns:repeat(4,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); align-content:stretch; }
+  .survivor-guide-enemy-visual,.survivor-guide-pickup-visual { width:min(100%,23cqh); }
+  .survivor-guide h5 { font-size:10px; }
+  .survivor-guide-stats { width:25px; gap:3px; }
+  .survivor-guide-stats dt { width:22px; height:10px; font-size:11px; }
+  .survivor-guide-stats > div { grid-template-rows:10px auto; gap:0; }
+  .survivor-guide-stats dd { font-size:10px; }
+  .survivor-guide-enemy-visual > .survivor-guide-art { right:28px; }
+}
+@media(max-width:560px) {
+  .survivor-guide-intro { display:grid; grid-template-columns:44px minmax(0,1fr); }
+  .survivor-guide-intro h4 { font-size:11px; }
+  .survivor-panel-guide .survivor-guide-intro p { font-size:10px; }
+  .survivor-guide { grid-template-rows:auto auto minmax(0,1fr); }
+  .survivor-guide-enemies,.survivor-guide-pickups { grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(4,minmax(0,1fr)); }
+  .survivor-guide-enemy-visual,.survivor-guide-pickup-visual { width:min(100%,16cqh); }
+  .survivor-guide-stats { gap:0; top:1px; bottom:21px; }
+  .survivor-guide-stats > div { grid-template-rows:9px auto; }
+  .survivor-guide-stats dt { height:9px; font-size:9px; }
+  .survivor-guide-stats dd { font-size:8px; }
+  .survivor-guide-pickup > p { font-size:9px; }
+}
+@media(min-width:600px) and (max-width:980px) and (max-height:560px) {
+  .survivor-guide-intro { display:none; }
+  .survivor-guide { grid-template-rows:auto minmax(0,1fr); }
+  .survivor-guide-enemies,.survivor-guide-pickups { grid-template-columns:repeat(7,minmax(0,1fr)); grid-template-rows:1fr; gap:3px; }
+  .survivor-guide .survivor-guide-section,.survivor-guide-section:has(.survivor-guide-enemies) { grid-template-rows:1fr; }
+  .survivor-guide-section > h4,.survivor-guide-section > .survivor-guide-note { display:none; }
+  .survivor-guide-enemy-visual,.survivor-guide-pickup-visual { width:min(100%,96px); }
+  .survivor-guide-stats { gap:0; top:1px; bottom:19px; }
+  .survivor-guide-stats > div { grid-template-rows:7px auto; }
+  .survivor-guide-stats dt { height:7px; font-size:8px; }
+  .survivor-guide-stats dd { font-size:7px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .survivor-button-game,.survivor-button-arrow { transition:none; }
+  .survivor-guide-vfx > i { animation:none; }
+  .survivor-guide-effect-magnet .survivor-guide-gem { transform:rotate(var(--angle)) translateX(42px) rotate(45deg); }
+  .survivor-guide-blast { transform:scale(2.6); opacity:.35; }
+}
+@media(max-width:700px) {
+  .survivor-dialog { width:calc(100% - 12px); height:calc(100dvh - 36px); }
+}
+@media(max-width:560px) {
+  .survivor-feature { flex-direction:column; align-items:flex-start; }
+}
+

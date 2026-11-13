@@ -1,0 +1,176 @@
+{
+  "table-through-partition": {
+    "slices": [
+      {
+        "x": 0,
+        "width": 10.5,
+        "anchorOffsetX": -96,
+        "supportOffsetY": -69
+      },
+      {
+        "x": 10.5,
+        "width": 11,
+        "anchorOffsetX": -80.25,
+        "supportOffsetY": -54
+      },
+      {
+        "x": 21.5,
+        "width": 10.5,
+        "anchorOffsetX": -63.75,
+        "supportOffsetY": -49.5
+      },
+      {
+        "x": 32,
+        "width": 10.5,
+        "anchorOffsetX": -48,
+        "supportOffsetY": -43.5
+      },
+      {
+        "x": 42.5,
+        "width": 11,
+        "anchorOffsetX": -32.25,
+        "supportOffsetY": -38.5
+      },
+      {
+        "x": 53.5,
+        "width": 10.5,
+        "anchorOffsetX": -15.75,
+        "supportOffsetY": -9
+      },
+      {
+        "x": 64,
+        "width": 10.5,
+        "anchorOffsetX": 0,
+        "supportOffsetY": -6
+      },
+      {
+        "x": 74.5,
+        "width": 11,
+        "anchorOffsetX": 15.75,
+        "supportOffsetY": -24
+      },
+      {
+        "x": 85.5,
+        "width": 10.5,
+        "anchorOffsetX": 32.25,
+        "supportOffsetY": -25.5
+      },
+      {
+        "x": 96,
+        "width": 10.5,
+        "anchorOffsetX": 48,
+        "supportOffsetY": -24
+      },
+      {
+        "x": 106.5,
+        "width": 11,
+        "anchorOffsetX": 63.75,
+        "supportOffsetY": -30
+      },
+      {
+        "x": 117.5,
+        "width": 10.5,
+        "anchorOffsetX": 80.25,
+        "supportOffsetY": -34.5
+      }
+    ]
+  },
+  "partition-diagonal": {
+    "slices": [
+      {
+        "x": 0,
+        "width": 16,
+        "anchorOffsetX": -64,
+        "supportOffsetY": -43
+      },
+      {
+        "x": 16,
+        "width": 16,
+        "anchorOffsetX": -48,
+        "supportOffsetY": -38
+      },
+      {
+        "x": 32,
+        "width": 16,
+        "anchorOffsetX": -32,
+        "supportOffsetY": -33
+      },
+      {
+        "x": 48,
+        "width": 16,
+        "anchorOffsetX": -16,
+        "supportOffsetY": -28
+      },
+      {
+        "x": 64,
+        "width": 16,
+        "anchorOffsetX": 0,
+        "supportOffsetY": -23
+      },
+      {
+        "x": 80,
+        "width": 16,
+        "anchorOffsetX": 16,
+        "supportOffsetY": -18
+      },
+      {
+        "x": 96,
+        "width": 16,
+        "anchorOffsetX": 32,
+        "supportOffsetY": -13
+      },
+      {
+        "x": 112,
+        "width": 16,
+        "anchorOffsetX": 48,
+        "supportOffsetY": -8
+      }
+    ]
+  },
+  "desk-tilted-submerged": {
+    "slices": [
+      {
+        "x": 0,
+        "width": 16,
+        "anchorOffsetX": -52,
+        "supportOffsetY": -37
+      },
+      {
+        "x": 16,
+        "width": 16,
+        "anchorOffsetX": -36,
+        "supportOffsetY": -27
+      },
+      {
+        "x": 32,
+        "width": 16,
+        "anchorOffsetX": -20,
+        "supportOffsetY": -16
+      },
+      {
+        "x": 48,
+        "width": 16,
+        "anchorOffsetX": -4,
+        "supportOffsetY": -14
+      },
+      {
+        "x": 64,
+        "width": 16,
+        "anchorOffsetX": 12,
+        "supportOffsetY": -18
+      },
+      {
+        "x": 80,
+        "width": 16,
+        "anchorOffsetX": 28,
+        "supportOffsetY": -22
+      },
+      {
+        "x": 96,
+        "width": 8,
+        "anchorOffsetX": 44,
+        "supportOffsetY": -25
+      }
+    ]
+  }
+}

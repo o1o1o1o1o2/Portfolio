@@ -1,0 +1,27 @@
+---
+import GameLauncher from '../../components/motion/GameLauncher.astro';
+import {copy, type Locale} from '../../survivors/text';
+export function getStaticPaths() {
+  return ['ru','en'].map(lang => ({params:{lang}}));
+}
+const lang = Astro.params.lang as Locale;
+const base = import.meta.env.BASE_URL.replace(/\/$/,'');
+const portfolio = `${base}/${lang}/`;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>HR Survivors</title>
+  <link rel="icon" href={`${base}/favicon.svg`}/>
+</head>
+<body style="background:#efedf7;color:#24243f;font-family:system-ui;padding:24px">
+  <a href={portfolio}>← {copy[lang].close}</a>
+  <main>
+    <h1>HR Survivors</h1>
+    <p>{copy[lang].teaser}</p>
+    <GameLauncher lang={lang} projectsHref={`${portfolio}#games`}/>
+  </main>
+</body>
+</html>

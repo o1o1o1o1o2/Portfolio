@@ -1,16 +1,17 @@
 ---
+import { translator, type Locale } from '../../i18n';
 import KineticLink from './KineticLink.astro';
-interface Props { base: string; }
-const { base } = Astro.props;
+interface Props { base: string; lang?: Locale; }
+const { base, lang = 'ru' } = Astro.props;
+const t = translator(lang);
 const previews = [
   {image:'eco.webp',name:'Eco Tycoon',className:'experience-eco'},
-  {image:'berserk.jpg',name:'Berserk Heroes Online',className:'experience-berserk'},
-  {image:'samedi.webp',name:'Samedi Manor',className:'experience-samedi'},
+  {image:'thesia-heroes.webp',name:'Thesia: Isekai World RPG',className:'experience-berserk'},
+  {image:'berserk-header.jpg',name:'Berserk Heroes Online',className:'experience-samedi'},
 ];
 ---
 <section class="experience-stage m-wrap" aria-labelledby="experience-title" data-intro-once data-intro-panel>
-  <div class="experience-meta"><span>UNITY / C# · GAME DEVELOPMENT</span><span>АРХИТЕКТУРА / UI / ИНСТРУМЕНТЫ</span></div>
-  <div class="experience-copy"><h2 id="experience-title" data-title="chars">Системы.<br/><em>Интерфейсы.<br/>Инструменты.<br/>Бэкенд.</em></h2><p>Battle Pass, арена, игровые события.<br/>Интеграции, оптимизация и инструменты для команды.</p><KineticLink label="Смотреть проекты" href="#games"/></div>
-  <div class="experience-collage" data-slide="right" aria-label="Кадры разных проектов">{previews.map(item=><figure class={item.className}><img src={`${base}/images/${item.image}`} alt={item.name} loading="eager" width="526" height="296"/><figcaption>{item.name}</figcaption></figure>)}<span class="experience-thesia">+ THESIA / ВИДЕОАРХИВ</span></div>
-  <span class="experience-footnote">КОММЕРЧЕСКИЙ ОПЫТ · ЛИЧНЫЙ ВКЛАД В РАБОТУ КОМАНДЫ</span>
+  <div class="experience-meta"><span>UNITY / C# · GAME DEVELOPMENT</span><span>{t('ui48')}</span></div>
+  <div class="experience-copy"><h2 id="experience-title" data-row-reveal><span data-reveal-row>{t('ui49')}</span><em data-reveal-row>{t('ui50')}</em><em data-reveal-row>{t('ui51')}</em><em data-reveal-row>{t('ui52')}</em></h2><KineticLink label={t('ui66')} href="#contact"/></div>
+  <div class="experience-collage" data-slide="right" aria-label={t('ui70')}>{previews.map(item=><figure class={item.className}><img src={`${base}/images/${item.image}`} alt={item.name} loading="eager" width="526" height="296"/><figcaption>{item.name}</figcaption></figure>)}</div>
 </section>

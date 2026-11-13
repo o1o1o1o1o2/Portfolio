@@ -1,0 +1,10 @@
+---
+
+
+interface Props{video:string;title:string}
+const {video,title}=Astro.props;
+const files=import.meta.glob('/public/videos/*.{mp4,webm}',{query:'?url',import:'default'});
+const available=Object.keys(files).some(path=>path.endsWith(video));
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+---
+{available&&<span class="project-video" data-project-video><video data-src={`${base}${video}`} aria-label={`${title} — trailer`} aria-hidden="true" muted loop playsinline preload="none" disablepictureinpicture disableRemotePlayback tabindex="-1"></video></span>}

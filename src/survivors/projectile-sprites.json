@@ -1,0 +1,33 @@
+{
+  "message": {
+    "texture": "game-atlas",
+    "frame": "concept-1-message-projectile",
+    "x": 991,
+    "y": 639,
+    "width": 128,
+    "height": 75,
+    "displayWidth": 42,
+    "originX": 0.7
+  },
+  "calendar": {
+    "texture": "game-atlas",
+    "frame": "concept-1-calendar-31-projectile",
+    "x": 859,
+    "y": 552,
+    "width": 128,
+    "height": 84,
+    "displayWidth": 42,
+    "originX": 0.68
+  },
+  "rejection": {
+    "texture": "game-atlas",
+    "frame": "concept-1-rejection-stamp",
+    "x": 1123,
+    "y": 786,
+    "width": 128,
+    "height": 59,
+    "displayWidth": 34,
+    "originX": 0.5,
+    "rotationDegrees": 0
+  }
+}
