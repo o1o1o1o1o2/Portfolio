@@ -69,21 +69,6 @@ export function createGameGuide(locale: Locale, proceduralSprites: Record<string
   introCopy.append(node('h4', '', t.goal), node('p', '', t.rules));
   intro.append(hero, introCopy);
   guide.append(intro);
-  guide.dataset.guideTab = 'enemies';
-  const tabs = node('div', 'survivor-guide-tabs');
-  tabs.setAttribute('role', 'group');
-  for (const [id, label] of [['enemies', t.enemies], ['pickups', t.pickups]]) {
-    const button = node('button', '', label);
-    button.type = 'button';
-    button.setAttribute('aria-pressed', String(id === 'enemies'));
-    button.addEventListener('click', () => {
-      guide.dataset.guideTab = id;
-      for (const tab of tabs.querySelectorAll('button')) tab.setAttribute('aria-pressed', String(tab === button));
-    });
-    tabs.append(button);
-  }
-  guide.append(tabs);
-
   const candidates = node('section', 'survivor-guide-section');
   candidates.dataset.guideSection = 'enemies';
   candidates.append(node('h4', '', t.enemies));

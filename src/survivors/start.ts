@@ -3,14 +3,14 @@ import gameAtlasUrl from './assets/game-atlas.png?url';
 import gameAtlas from './assets/game-atlas.json';
 import officeAtlasUrl from './assets/office-atlas.png?url';
 import officeAtlas from './assets/office-atlas.json';
-import { FINAL_BOSS_KIND, RUN_SECONDS, STEP, VIEW_HEIGHT, VIEW_WIDTH, enemies } from './config.ts';
+import { FINAL_BOSS_KIND, RUN_SECONDS, STEP, enemies } from './config.ts';
 import { Field } from './field.ts';
 import { Run, type RunPhase } from './run.ts';
 import { copy, type Locale } from './text.ts';
 import { createGameGuide } from './guide';
 import { createUpgradeCard } from './upgrade-card';
 
-const CAMERA_ZOOM = .8;
+const CAMERA_ZOOM = 1.6;
 
 function element<K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text?: string) {
   const result = document.createElement(tag);
@@ -66,6 +66,22 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
   stick.setAttribute('aria-hidden', 'true');
   root.append(surface, hud, runStats, controls, stick, overlay);
   host.replaceChildren(root);
+  const layoutWidth = 1500;
+  host.style.position = 'relative';
+  host.style.height = '100%';
+  const fitGame = () => {
+    const scale = Math.max(1, host.clientWidth) / layoutWidth;
+    const layoutHeight = Math.max(1, host.clientHeight) / scale;
+    root.style.width = layoutWidth + 'px';
+    root.style.height = layoutHeight + 'px';
+    root.style.position = 'absolute';
+    root.style.left = '50%';
+    root.style.top = '50%';
+    root.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  };
+  const layoutResize = new ResizeObserver(fitGame);
+  layoutResize.observe(host);
+  fitGame();
 
   let pointer = -1, startX = 0, startY = 0, touchX = 0, touchY = 0;
   const clearInput = () => { keys.clear(); pointer = -1; touchX = touchY = 0; stick.hidden = true; };
@@ -143,6 +159,19 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
     cancel.focus({ preventScroll: true });
   }
 
+  function fitGuide() {
+    if (!panel.classList.contains('survivor-panel-guide')) {
+      panel.style.removeProperty('zoom');
+      return;
+    }
+    const scale = Math.min(1, Math.max(1, overlay.clientWidth - 16) / 1500,
+      Math.max(1, overlay.clientHeight - 16) / 850);
+    panel.style.setProperty('zoom', String(scale));
+  }
+
+  const guideResize = new ResizeObserver(fitGuide);
+  guideResize.observe(overlay);
+
   function renderOverlay() {
     overlay.hidden = run.phase === 'running';
     if (overlay.hidden) return;
@@ -152,6 +181,7 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
     panel.classList.toggle('survivor-panel-upgrade', run.phase === 'upgrade');
     panel.classList.toggle('survivor-panel-lost', run.phase === 'lost');
     panel.classList.toggle('survivor-panel-won', run.phase === 'won');
+    fitGuide();
     const heading = element('h3', '', {
       intro: 'HR Survivors', paused: t.pause, upgrade: t.upgrade,
       won: t.won, lost: t.lost, running: '',
@@ -250,8 +280,9 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
     startX = event.clientX; startY = event.clientY;
     surface.setPointerCapture(pointer);
     const rect = root.getBoundingClientRect();
-    stick.style.left = `${startX - rect.left}px`;
-    stick.style.top = `${startY - rect.top}px`;
+    const layoutScale = rect.width / layoutWidth;
+    stick.style.left = `${(startX - rect.left) / layoutScale}px`;
+    stick.style.top = `${(startY - rect.top) / layoutScale}px`;
     knob.style.transform = '';
     stick.hidden = false;
   }, listener);
@@ -310,14 +341,13 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
   }
 
   const measureViewport = () => {
-    const width = Math.max(1, surface.clientWidth);
-    const height = Math.max(1, surface.clientHeight);
-    const density = Math.max(VIEW_WIDTH / width, VIEW_HEIGHT / height);
-    // Render at the surface size instead of stretching a low-resolution canvas.
-    // Compensate with camera zoom to preserve the visible world and game scale.
-    const scale = 1 / density;
-    return { width: Math.max(1, Math.round(VIEW_WIDTH * scale)),
-      height: Math.max(1, Math.round(VIEW_HEIGHT * scale)), zoom: CAMERA_ZOOM * scale };
+    const bounds = surface.getBoundingClientRect();
+    const width = Math.max(1, bounds.width);
+    const height = Math.max(1, bounds.height);
+    // Match the displayed canvas in CSS pixels. Keep world magnification fixed;
+    // different viewport sizes expose more or less of the world.
+    return { width: Math.max(1, Math.round(width)),
+      height: Math.max(1, Math.round(height)), zoom: CAMERA_ZOOM };
   };
   const viewport = measureViewport();
   let viewportZoom = viewport.zoom;
@@ -350,10 +380,13 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
     game.loop.wake();
   });
   resize.observe(surface);
+  resize.observe(host);
   sync();
   return () => {
     abort.abort();
     resize.disconnect();
+    guideResize.disconnect();
+    layoutResize.disconnect();
     game.destroy(true);
     // Destruction is processed on the next tick, including when paused.
     game.loop.wake();

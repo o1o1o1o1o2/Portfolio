@@ -121,7 +121,7 @@
 .survivor-button-arrow { display:inline-block; transform:rotate(-45deg); transition:transform .22s ease; }
 [data-play]:hover .survivor-button-arrow,[data-play]:focus-visible .survivor-button-arrow { transform:rotate(0); }
 .survivor-panel-guide {
-  box-sizing:border-box; width:min(100%,1500px); height:100%; max-height:100%;
+  box-sizing:border-box; width:1500px; height:850px; max-height:none; flex-shrink:0;
   display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:clamp(10px,2cqh,18px);
   padding:12px 18px; overflow:hidden; container-type:size;
   background:radial-gradient(ellipse at top right,#49306170,transparent 60%),#211b32;
@@ -209,52 +209,6 @@
 .survivor-guide-orb { width:14px; height:14px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffd6df 0 20%,#ff446e 30% 65%,#ff276b44 70%); box-shadow:0 0 8px #ff276b66; }
 .survivor-guide-lasers { width:24px; height:3px; background:#fff1f5; box-shadow:0 0 0 2px #ff497c,0 0 8px 3px #ff226666; transform:rotate(-20deg); }
 .survivor-guide-actions { display:flex; justify-content:flex-end; align-items:center; gap:12px; border-top:1px solid #755684; padding:8px 3px 3px; }
-.survivor-guide-tabs { display:none; }
-@media(max-width:980px) {
-  .survivor-panel-guide { padding:10px; }
-  .survivor-guide { grid-template-rows:auto auto minmax(0,1fr); font-size:11px; }
-  .survivor-guide-intro { grid-template-columns:56px minmax(0,1fr); gap:8px; }
-  .survivor-guide-intro .survivor-guide-controls { display:none; }
-  .survivor-guide-tabs { display:flex; gap:4px; }
-  .survivor-guide-tabs button { flex:1; border:1px solid #80628e; border-radius:5px; padding:7px 3px; background:#31243f; color:#dfd0ed; font:600 11px system-ui; }
-  .survivor-guide-tabs button[aria-pressed="true"] { background:#684268; color:#fff0d0; border-color:#e69bbc; }
-  .survivor-guide [data-guide-section] { display:none; }
-  .survivor-guide[data-guide-tab="enemies"] [data-guide-section="enemies"],
-  .survivor-guide[data-guide-tab="pickups"] [data-guide-section="pickups"] { display:grid; }
-  .survivor-guide-enemies,.survivor-guide-pickups { grid-template-columns:repeat(4,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); align-content:stretch; }
-  .survivor-guide-enemy-visual,.survivor-guide-pickup-visual { width:min(100%,23cqh); }
-  .survivor-guide h5 { font-size:10px; }
-  .survivor-guide-stats { width:25px; gap:3px; }
-  .survivor-guide-stats dt { width:22px; height:10px; font-size:11px; }
-  .survivor-guide-stats > div { grid-template-rows:10px auto; gap:0; }
-  .survivor-guide-stats dd { font-size:10px; }
-  .survivor-guide-enemy-visual > .survivor-guide-art { right:28px; }
-}
-@media(max-width:560px) {
-  .survivor-guide-intro { display:grid; grid-template-columns:44px minmax(0,1fr); }
-  .survivor-guide-intro h4 { font-size:11px; }
-  .survivor-panel-guide .survivor-guide-intro p { font-size:10px; }
-  .survivor-guide { grid-template-rows:auto auto minmax(0,1fr); }
-  .survivor-guide-enemies,.survivor-guide-pickups { grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(4,minmax(0,1fr)); }
-  .survivor-guide-enemy-visual,.survivor-guide-pickup-visual { width:min(100%,16cqh); }
-  .survivor-guide-stats { gap:0; top:1px; bottom:21px; }
-  .survivor-guide-stats > div { grid-template-rows:9px auto; }
-  .survivor-guide-stats dt { height:9px; font-size:9px; }
-  .survivor-guide-stats dd { font-size:8px; }
-  .survivor-guide-pickup > p { font-size:9px; }
-}
-@media(min-width:600px) and (max-width:980px) and (max-height:560px) {
-  .survivor-guide-intro { display:none; }
-  .survivor-guide { grid-template-rows:auto minmax(0,1fr); }
-  .survivor-guide-enemies,.survivor-guide-pickups { grid-template-columns:repeat(7,minmax(0,1fr)); grid-template-rows:1fr; gap:3px; }
-  .survivor-guide .survivor-guide-section,.survivor-guide-section:has(.survivor-guide-enemies) { grid-template-rows:1fr; }
-  .survivor-guide-section > h4,.survivor-guide-section > .survivor-guide-note { display:none; }
-  .survivor-guide-enemy-visual,.survivor-guide-pickup-visual { width:min(100%,96px); }
-  .survivor-guide-stats { gap:0; top:1px; bottom:19px; }
-  .survivor-guide-stats > div { grid-template-rows:7px auto; }
-  .survivor-guide-stats dt { height:7px; font-size:8px; }
-  .survivor-guide-stats dd { font-size:7px; }
-}
 @media(prefers-reduced-motion:reduce) {
   .survivor-button-game,.survivor-button-arrow { transition:none; }
   .survivor-guide-vfx > i { animation:none; }
