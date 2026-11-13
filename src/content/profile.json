@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "identity": {
     "displayNameRu": "Данил",
-    "displayNameEn": null
+    "displayNameEn": "Daniel"
   },
   "general": {
     "role": { "ru": "Software Engineer · Unity/C# · Go Backend", "en": "Software Engineer · Unity/C# · Go Backend" },

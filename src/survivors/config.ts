@@ -104,15 +104,15 @@ export const bossConfig = {
 } as const;
 
 export const upgrades = [
-  { max: 5, ru: ['Письма', 'Больше урона и выше частота писем'], en: ['Envelopes', 'More damage and faster envelopes'] },
+  { max: 5, ru: ['Письма', 'Больше писем за залп, выше урон и частота выстрелов'], en: ['Envelopes', 'More letters per volley, more damage, and faster firing'] },
   { max: 3, ru: ['ATS-фильтр', '2 → 4 → 8 печатей на орбите'], en: ['ATS filter', '2 → 4 → 8 orbiting rejection stamps'] },
   { max: 5, ru: ['Зарплата после собеседования', 'Аура вокруг HR. Растут радиус и урон, частота ударов +15% за уровень'], en: ['Salary after interview', 'An aura around HR. Radius and damage increase, with 15% more hits per second per level'] },
   { max: 5, ru: ['Групповое интервью', 'Длительная область на земле. Растут длительность и урон'], en: ['Group interview', 'A ground zone. Increases duration and damage'] },
   { max: 5, ru: ['Форма №7', '+1 папка за бросок. Папки пробивают врагов и возвращаются'], en: ['Form No. 7', '+1 folder per throw. Folders pierce enemies and return'] },
   { max: 5, ru: ['Срочное согласование', 'Больше падающих печатей. Каждая бьёт сильнее'], en: ['Urgent approval', 'More falling stamps. Each stamp hits harder'] },
-  { max: 5, ru: ['Кроссовки', 'Быстрее движение'], en: ['Sneakers', 'Move faster'] },
-  { max: 5, ru: ['ATS-поиск', 'Больше радиус сбора опыта'], en: ['ATS search', 'Larger pickup radius'] },
-  { max: 5, ru: ['Оплачиваемый отпуск', 'Больше максимальное настроение'], en: ['Paid leave', 'Increase maximum mood'] },
+  { max: 5, ru: ['Кроссовки', 'Выше скорость движения'], en: ['Sneakers', 'Move faster'] },
+  { max: 5, ru: ['ATS-поиск', 'Больше радиус сбора кристаллов опыта'], en: ['ATS search', 'Larger pickup radius'] },
+  { max: 5, ru: ['Оплачиваемый отпуск', 'Больше максимальный запас настроения'], en: ['Paid leave', 'Increase maximum mood'] },
   { max: 5, ru: ['Сквозной отказ', 'Конверт пробивает ещё одного врага'], en: ['Piercing rejection', 'Envelopes pierce one more enemy'] },
 ] as const;
 export const folderConfig = { range: 320, outwardSpeed: 290, returnSpeed: 310, lifetime: 4, sizeMultiplier: .5 };

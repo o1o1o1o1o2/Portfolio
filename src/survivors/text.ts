@@ -28,7 +28,7 @@ export const copy = {
     start: 'Start run', mood: 'Mood', level: 'Level',
     upgrade: 'Choose an upgrade', boss: 'The Ideal Candidate',
     won: 'Vacancy filled!', lost: 'GAME OVER',
-    wonDetail: 'You survived the applications and defeated the Ideal Candidate.',
+    wonDetail: 'You weathered the flood of applications. The Ideal Candidate has been selected.',
     lostDetail: 'We got the wrong guy.',
     retry: 'Try again', projects: 'See projects', error: 'Could not start the game.',
     teaser: 'Five minutes in the office. Dodge candidates and upgrade your automatic rejections.',
