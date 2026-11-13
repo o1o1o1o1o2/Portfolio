@@ -1,5 +1,6 @@
 import { renderReelGlyph, splitTitle } from './title-glyphs';
 import type { MotionEffect } from './engine';
+import { REPLAY_ENTRANCE_ANIMATIONS } from './config';
 import { damp, ease, expansion, range, advanceTile, expoOut, titleProgress, introProgress, glyphReveal,tilePlacement,headingSlideProgress,textEntrance,lineShiftProgress,reelDuration } from './math';
 
 function startsInViewport(element: HTMLElement) {
@@ -25,7 +26,7 @@ export function rowRevealEffect(element:HTMLElement):MotionEffect{
   render(frame){
    const visible = Math.min(bottom, frame.height) - Math.max(top, 0);
    if (!rises || run.started || visible >= Math.min(bottom - top, frame.height) * .30) {
-    advanceTile(run,top,bottom,frame.height,frame.delta,3,replay);
+    advanceTile(run,top,bottom,frame.height,frame.delta,3,replay && REPLAY_ENTRANCE_ANIMATIONS);
    }
    const time=intro?frame.introTime:run.elapsed;
    rows.forEach((row,i)=>{
@@ -123,7 +124,7 @@ export function tileEffect(element: HTMLElement, index: number): MotionEffect {
     snapshot:()=>({...run}),restore(s){if(s)Object.assign(run,s);},
     measure(){const rect=element.getBoundingClientRect();top=rect.top;width=stage.offsetWidth;height=stage.offsetHeight;},
     render(frame){
-      advanceTile(run,top,top+height,frame.height,frame.delta);
+      advanceTile(run,top,top+height,frame.height,frame.delta,3,REPLAY_ENTRANCE_ANIMATIONS);
       const reveal=frame.reduced?1:expoOut(run.elapsed/1.5);
       const pose=tilePlacement(frame.reduced?2:run.elapsed*1.5,index,width,height,frame.width,frame.width<=700);
       const inset=(1-reveal)*5;
@@ -163,7 +164,7 @@ export function titleEffect(element: HTMLElement): MotionEffect {
     snapshot:()=>({intro,target,value,run:{...run}}),restore(s){if(s){intro=s.intro;target=s.target;value=s.value;if(s.run)Object.assign(run,s.run);}},
     measure(frame){const r=element.getBoundingClientRect();top=r.top;bottom=r.bottom;target=Math.min(titleProgress(r.top,frame.height,frame.y,frame.maxScroll),range(r.bottom+50,0,frame.height*.16));},
     render(frame){
-      advanceTile(run,top,bottom,frame.height,frame.delta,3,replay);
+      advanceTile(run,top,bottom,frame.height,frame.delta,3,replay && REPLAY_ENTRANCE_ANIMATIONS);
       value=frame.reduced?1:intro?introProgress(frame.introTime,.35,2.1):range(run.elapsed,0,.85);
       glyphs.forEach((glyph,i)=>{
         if(!intro&&mode==='slot'){renderReelGlyph(glyph,frame.reduced?reelDuration:run.elapsed,i,glyphs.length);return;}
@@ -195,7 +196,7 @@ export function slideEffect(element: HTMLElement): MotionEffect {
   return {
     snapshot:()=>({intro,target,value,run:{...run}}),restore(s){if(s){intro=s.intro;target=s.target;value=s.value;if(s.run)Object.assign(run,s.run);}},
     measure(){const r=element.getBoundingClientRect();top=r.top;bottom=r.bottom;},
-    render(frame){advanceTile(run,top,bottom,frame.height,frame.delta,3,replay);value=frame.reduced?1:intro?introProgress(frame.introTime,.5,1.9):range(run.elapsed,0,.9);const p=ease(value);element.style.transform=`translate3d(${side*(1-p)*(intro?45:80)}px,${(1-p)*rise}px,0)`;element.style.opacity=String(.2+.8*p);return !frame.reduced&&(intro?value<1:run.started&&value<1);},
+    render(frame){advanceTile(run,top,bottom,frame.height,frame.delta,3,replay && REPLAY_ENTRANCE_ANIMATIONS);value=frame.reduced?1:intro?introProgress(frame.introTime,.5,1.9):range(run.elapsed,0,.9);const p=ease(value);element.style.transform=`translate3d(${side*(1-p)*(intro?45:80)}px,${(1-p)*rise}px,0)`;element.style.opacity=String(.2+.8*p);return !frame.reduced&&(intro?value<1:run.started&&value<1);},
     dispose(){element.style.removeProperty('transform');element.style.removeProperty('opacity');}
   };
 }

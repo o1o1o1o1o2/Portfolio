@@ -7,6 +7,7 @@ import {copy as survivorCopy} from '../../survivors/text';
 import ExperienceStage from '../../components/motion/ExperienceStage.astro';
 import GameLauncher from './GameLauncher.astro';
 import ProjectVideo from './ProjectVideo.astro';
+import TechStack from './TechStack.astro';
 import ProjectSlideshow from './ProjectSlideshow.astro';
 import { translator, type Locale } from '../../i18n';
 interface Props { lang?: Locale; }
@@ -43,7 +44,7 @@ const trailers: Record<string,{video:string;poster:string}> = {
 ---
 <!doctype html><html lang={lang}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><title>{t('ui0')}</title><link rel="icon" href={`${base}/favicon.svg`}/></head><body>
 <a class="m-skip" href="#main">{t('ui1')}</a>
-<header class="m-header m-wrap" data-intro-panel><a class="m-logo" href="#main">{t('ui2')}</a><span class="m-role">UNITY / C# /<br/>BACKEND DEVELOPER</span><nav aria-label={t('ui69')}><KineticLink label={t('ui64')} href="#games"/><KineticLink label={t('ui12')} href="#backend"/><KineticLink label={t('ui65')} href="#articles"/><KineticLink label="HR Survivors" href="#survivors"/></nav><label class="locale-toggle"><input type="checkbox" role="switch" checked={lang === 'en'} data-locale-switch data-target={`${base}/${lang === 'ru' ? 'en' : 'ru'}/`} aria-label={lang === 'ru' ? 'Английский язык' : 'English language'}/><span class="locale-track" aria-hidden="true"><span class="locale-thumb"></span><span class="locale-option">RU</span><span class="locale-option">EN</span></span></label><KineticLink label={t('ui66')} href="#contact" class="m-talk"/></header>
+<header class="m-header m-wrap" data-intro-panel><a class="m-logo" href="#main">{t('ui2')}</a><span class="m-role">SENIOR UNITY DEVELOPER /<br/>BACKEND DEVELOPER</span><nav aria-label={t('ui69')}><KineticLink label={t('ui64')} href="#games"/><KineticLink label={t('ui12')} href="#backend"/><KineticLink label={t('ui65')} href="#articles"/><KineticLink label="HR Survivors" href="#survivors"/></nav><label class="locale-toggle"><input type="checkbox" role="switch" checked={lang === 'en'} data-locale-switch data-target={`${base}/${lang === 'ru' ? 'en' : 'ru'}/`} aria-label={lang === 'ru' ? 'Английский язык' : 'English language'}/><span class="locale-track" aria-hidden="true"><span class="locale-thumb"></span><span class="locale-option">RU</span><span class="locale-option">EN</span></span></label><KineticLink label={t('ui66')} href="#contact" class="m-talk"/></header>
 <main id="main">
   <section class="m-intro m-wrap" data-intro-once><div class="intro-label"><span class="tiny-cross">+</span><span>{t('ui3')}</span></div><h1 data-title="chars">{t('ui4')}<br/>{t('ui78')}</h1><div class="intro-about" data-slide="right"><p>{t('ui5')}</p></div></section>
   <ExperienceStage base={base} lang={lang}/>
@@ -58,6 +59,7 @@ const trailers: Record<string,{video:string;poster:string}> = {
       <div class="project-description"><div class="project-caption"><svg class="project-caption-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h19M13 4l8 8-8 8"/></svg><h3 class="project-name"><span data-title="slot">{game.title}</span></h3></div><p data-typewriter>{game.summary[lang]}</p></div>
     </article>)}
   </section>
+  <TechStack lang={lang}/>
   <section class="m-engineering" id="backend"><div class="m-wrap"><div class="engineering-heading"><span class="tiny-cross">+</span><span class="m-eyebrow">BEYOND GAMEPLAY / 02</span><h2 data-title="chars">{t('ui12')}<br/><em>{t('ui13')}</em></h2><p data-slide="right">{t('ui14')}<br/>{t('ui15')}</p></div><div class="engineering-content"><div class="engineering-copy" data-slide="left"><span class="m-eyebrow">{t('ui16')}</span><h3>HomeAlone<span>↗</span></h3><p>{backend.summary[lang]}</p><div class="engineering-tags">{[...backend.stack, ...backend.plannedStack].map(tag=><span>{tag}</span>)}</div></div><div class="system-panel" data-slide="right"><div class="system-top"><span>{t('ui19')}</span><span class="pulse-dot"></span></div><div class="system-flow"><div class="system-block"><strong>{t('requestApiDetail')}</strong></div><span class="flow-connector">↓</span><div class="system-block active"><strong>{t('requestServiceDetail')}</strong><div class="signal"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="flow-connector">↓</span><div class="system-block"><small>{t('ui22')}</small><strong>{t('requestStorageDetail')}</strong></div></div><div class="system-bottom">{t('ui23')}</div></div></div></div></section>
   <section class="m-articles m-wrap" id="articles"><div class="articles-heading"><span class="m-eyebrow">{t('ui24')}</span><h2 data-title="mixed">{t('ui25')}<br/><em>{t('ui26')}</em></h2></div><a class="motion-article" href={portfolio.articles[0].url} target="_blank" rel="noopener noreferrer"><div class="article-art" aria-hidden="true"><span class="article-wire">▧</span><span>VOXEL<br/>RENDERING</span><small>CPU → GPU / UNITY</small></div><div class="motion-article-copy"><span class="m-eyebrow">{t('ui27')}</span><h3 data-title="chars">{portfolio.articles[0].title.ru}</h3><span class="article-read">{t('ui28')}<span>↗</span></span></div></a></section>
   <section class="m-profile m-wrap" id="profile" aria-labelledby="profile-title" data-row-reveal="up">
@@ -73,7 +75,7 @@ const trailers: Record<string,{video:string;poster:string}> = {
       </div>
     </dl>
   </section>
-  <section class="m-contact m-wrap" id="contact"><div><span class="m-eyebrow">{t('ui38')}</span><h2 data-title="lines"><span data-title-line>{t('ui39')}</span><em data-title-line>{t('ui40')}</em></h2></div><div class="contact-side"><p>Unity / C# · Go<br/>{t('ui41')}</p><KineticLink label="GitHub" href="https://github.com/o1o1o1o1o2" external/><KineticLink label="Хабр" href="https://habr.com/ru/users/o1o1o1o1o2/" external/></div></section>
+  <section class="m-contact m-wrap" id="contact"><div><span class="m-eyebrow">{t('ui38')}</span><h2 data-title="lines"><span data-title-line>{t('ui39')}</span><em data-title-line>{t('ui40')}</em></h2></div><div class="contact-side"><p>Senior Unity Developer · Go<br/>{t('ui41')}</p><KineticLink label="GitHub" href="https://github.com/o1o1o1o1o2" external/><KineticLink label="Хабр" href="https://habr.com/ru/users/o1o1o1o1o2/" external/></div></section>
   <section class="survivor-expansion" id="survivors" data-expansion aria-labelledby="survivor-heading">
     <div class="expansion-sticky">
       <div class="expansion-copy">

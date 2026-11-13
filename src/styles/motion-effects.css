@@ -261,15 +261,21 @@ html,body{overflow-x:clip}
   white-space:nowrap;
 }
 
+.m-profile,.tech-stack {
+  --sage-surface:#e2e4db;
+  --sage-heading:#535e47;
+  --sage-text:#50564c;
+  --sage-line:#aeb5a4;
+}
 .m-profile.m-wrap {
   width:calc(100% - 96px);
   padding:clamp(14px, 1.8vw, 24px) clamp(16px, 3vw, 40px);
   border-radius:16px;
-  background:#e2e4db;
+  background:var(--sage-surface);
 }
 .m-profile h2 {
   margin:0 0 12px;
-  color:#535e47;
+  color:var(--sage-heading);
   text-transform:uppercase;
 }
 .m-profile-grid {

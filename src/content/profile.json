@@ -5,7 +5,7 @@
     "displayNameEn": "Daniel"
   },
   "general": {
-    "role": { "ru": "Software Engineer · Unity/C# · Go Backend", "en": "Software Engineer · Unity/C# · Go Backend" },
+    "role": { "ru": "Senior Unity Developer · Go Backend", "en": "Senior Unity Developer · Go Backend" },
     "summary": {
       "ru": "Более пяти лет коммерческой разработки на C#/Unity: архитектура игровых систем, core-компоненты, внешние интеграции и оптимизация. В личном проекте HomeAlone разрабатываю бэкенд на Go — HTTP API, PostgreSQL и модульную серверную логику.",
       "en": "Over five years of commercial C#/Unity development: game system architecture, core components, external integrations and optimization. In my personal project HomeAlone, I develop a Go backend with HTTP APIs, PostgreSQL and modular server logic."

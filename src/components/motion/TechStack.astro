@@ -1,0 +1,29 @@
+---
+import type { Locale } from '../../i18n';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const ru = lang === 'ru';
+const groups = [
+  { title: ru ? 'Язык и библиотеки' : 'Language & libraries', text: 'C# · HLSL · .NET / Mono · OOP / SOLID · DI: Zenject / VContainer · UniTask / async · LINQ · DOTween' },
+  { title: 'Unity', text: 'URP · Particle System / VFX · Addressables · NavMesh · Animator · UGUI / Canvas · UI Toolkit · Audio · DOTS' },
+  { title: ru ? 'Профилирование' : 'Profiling', text: 'CPU · GPU · RAM' },
+  { title: ru ? 'Платформы и аналитика' : 'Platforms & analytics', text: 'Google Play · App Store · Firebase · AppMetrica · Unity Analytics / Ads · AppLovin MAX · Crashlytics · YandexMetrica · AppsFlyer' },
+  { title: ru ? 'Инструменты' : 'Tools', text: 'Git · Jira · Confluence · Google Workspace' },
+];
+---
+<section class="tech-stack m-wrap" aria-labelledby="stack-title">
+  <div class="stack-heading"><h2 id="stack-title">{ru ? 'Стек' : 'Stack'}</h2></div>
+  <div class="stack-grid" data-row-reveal="up">{groups.map(group => <article class="stack-card" data-reveal-row><h3 class="m-eyebrow">{group.title}</h3><ul class="stack-tags">{group.text.split(' · ').map(skill => <li>{skill}</li>)}</ul></article>)}</div>
+</section>
+<style>
+  .tech-stack{margin-top:56px;margin-bottom:-55px}
+  .stack-heading{display:flex;align-items:baseline;gap:32px;margin-bottom:20px}
+  h2{margin:0;font-size:28px;font-weight:500;letter-spacing:-1px}
+  .stack-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.3fr) minmax(0,.65fr) minmax(0,1.35fr) minmax(0,1fr);gap:12px}
+  .stack-card{min-width:0;padding:18px 14px;border:0;border-radius:16px;background:var(--sage-surface);color:var(--sage-text)}
+  h3{margin:0 0 12px;color:var(--sage-heading);text-transform:uppercase;font-weight:400}
+  ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0}
+  li{border-color:var(--sage-line);background:#ffffff30}
+  @media(max-width:1000px){.stack-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stack-card:last-child{grid-column:1/-1}}
+  @media(max-width:700px){.tech-stack{margin-top:32px;margin-bottom:-20px}.stack-heading{display:block}.stack-grid{grid-template-columns:1fr}.stack-card{padding:16px}.stack-card:last-child{grid-column:auto}}
+</style>
