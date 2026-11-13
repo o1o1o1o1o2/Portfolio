@@ -362,7 +362,7 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
     type: Phaser.AUTO, parent: surface, width: viewport.width, height: viewport.height,
     backgroundColor: '#282840', scene,
     fps: { target: 60, limit: 60, smoothStep: false },
-    scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
+    scale: { mode: Phaser.Scale.NONE, autoCenter: Phaser.Scale.NO_CENTER },
     render: { antialias: false, pixelArt: true, roundPixels: true },
   });
   wakeGame = () => game.loop.wake();
@@ -375,7 +375,7 @@ export function startGame(host: HTMLElement, locale: Locale, close: (projects?: 
     viewportZoom = zoom;
     if (scene.cameras?.main) scene.cameras.main.setZoom(viewportZoom);
     updateCameraBounds(width, height);
-    game.scale.setGameSize(width, height);
+    game.scale.resize(width, height);
     scene.draw();
     game.loop.wake();
   });
