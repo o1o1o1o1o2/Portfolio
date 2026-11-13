@@ -1,5 +1,5 @@
 import {
-  PAID_LEAVE_MOOD_GAIN,
+  PAID_LEAVE_MOOD_GAIN, UPGRADE_INVULNERABILITY_SECONDS,
   BOSS_TIME, FINAL_BOSS_KIND, STEP, VIEW_WIDTH, VIEW_HEIGHT, WORLD_WIDTH, WORLD_HEIGHT,
   MAX_DROPS, MAX_ENEMIES, MAX_SHOTS, PLAYER_SPEED,
   dropKind, crystalScore, enemies, healingPickups, upgrades, waves, bonusConfig, orbitConfig,
@@ -152,6 +152,7 @@ export class Run {
     if (this.phase !== 'upgrade' || !Number.isInteger(index) || index < 0 || index >= this.choiceCount) return;
     const id = this.choices[index];
     this.levels[id]++;
+    this.invulnerable = Math.max(this.invulnerable, UPGRADE_INVULNERABILITY_SECONDS);
     if (id === 8) { this.maxMood += PAID_LEAVE_MOOD_GAIN; this.mood += PAID_LEAVE_MOOD_GAIN; }
     this.pendingLevels--;
     this.offer();
@@ -718,9 +719,6 @@ export class Run {
         continue;
       }
       const kind = p.kind[i];
-      if (!isExperience(kind)) {
-        this.invulnerable = Math.max(this.invulnerable, bonusConfig.invulnerabilitySeconds);
-      }
       if (isExperience(kind)) {
         this.score += crystalScore[kind];
         this.xp += crystalXp[kind];

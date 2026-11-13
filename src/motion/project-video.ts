@@ -13,10 +13,19 @@ export function bindProjectVideos() {
         return;
       }
       if (!video.getAttribute('src')) video.src = video.dataset.src!;
-      void video.play().catch(() => root.classList.remove('is-loaded'));
+      void video.play().catch((error: unknown) => {
+        root.classList.remove('is-loaded');
+        root.dataset.videoError = error instanceof DOMException ? error.name : 'PlaybackError';
+      });
     };
-    video.addEventListener('playing', () => root.classList.add('is-loaded'), { signal });
-    video.addEventListener('error', () => root.classList.remove('is-loaded'), { signal });
+    video.addEventListener('playing', () => {
+      root.classList.add('is-loaded');
+      delete root.dataset.videoError;
+    }, { signal });
+    video.addEventListener('error', () => {
+      root.classList.remove('is-loaded');
+      root.dataset.videoError = String(video.error?.code ?? 'MediaError');
+    }, { signal });
     video.addEventListener('contextmenu', event => event.preventDefault(), { signal });
     const observer = new IntersectionObserver(entries => {
       visible = entries[0].isIntersecting && entries[0].intersectionRatio >= .15;
@@ -25,6 +34,9 @@ export function bindProjectVideos() {
     observer.observe(root.closest('.motion-project') ?? root);
     document.addEventListener('visibilitychange', update, { signal });
     reduced.addEventListener('change', update, { signal });
+    document.addEventListener('pointerdown', () => {
+      if (video.paused) update();
+    }, { passive: true, signal });
     return () => { observer.disconnect(); video.pause(); };
   });
   return () => { abort.abort(); disposers.forEach(dispose => dispose()); };

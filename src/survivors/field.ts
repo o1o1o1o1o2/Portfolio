@@ -191,8 +191,9 @@ export class Field {
   private readonly pickups: Images;
   private readonly stamps: Images;
   private readonly areas: Images;
-  private readonly damageDigits: Images;
-  private readonly digitKeys: string[][] = [];
+  private readonly damageTexts: Phaser.GameObjects.BitmapText[] = [];
+  private readonly damageScene: Phaser.Scene;
+  private readonly damageFonts = ['damage-gold', 'damage-pink'];
   private readonly hero: Phaser.GameObjects.Image;
   private readonly speech: Phaser.GameObjects.Text;
   private readonly speechBubble: Phaser.GameObjects.Graphics;
@@ -234,7 +235,7 @@ export class Field {
     this.stamps = new Images(scene, 7);
     worldLayer.add(this.hero);
     this.health = new Images(scene, 8);
-    this.damageDigits = new Images(scene, 9);
+    this.damageScene = scene;
     this.speechBubble = scene.add.graphics().setDepth(10);
     this.speech = scene.add.text(0, 0, '', { fontFamily: 'Arial, sans-serif', fontSize: '12px',
       fontStyle: 'bold', letterSpacing: .6, color: '#49304e', resolution: 2 })
@@ -244,25 +245,30 @@ export class Field {
       { fontFamily: 'sans-serif', fontSize: '25px', fontStyle: 'bold', color: '#ffe4b1',
         align: 'center', stroke: '#49304e', strokeThickness: 4, resolution: 2 })
       .setOrigin(.5).setDepth(12).setVisible(false);
-    for (const color of ['#ffe6a3', '#ff8a9f']) {
-      const keys = [];
+    const digits = scene.textures.createCanvas('damage-digits', 180, 48)!;
+    const ctx = digits.getContext();
+    ctx.font = 'bold 17px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#241829';
+    for (let rowIndex = 0; rowIndex < 2; rowIndex++) {
+      const color = ['#ffe6a3', '#ff8a9f'][rowIndex];
+      const row = rowIndex * 24;
       for (let digit = 0; digit < 10; digit++) {
-        const key = `damage-${this.digitKeys.length}-${digit}`;
-        const texture = scene.textures.createCanvas(key, 18, 24)!;
-        const ctx = texture.getContext();
-        ctx.font = 'bold 17px monospace';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = '#241829';
         ctx.fillStyle = color;
-        ctx.strokeText(String(digit), 9, 12);
-        ctx.fillText(String(digit), 9, 12);
-        texture.refresh();
-        keys.push(key);
+        ctx.strokeText(String(digit), digit * 18 + 9, row + 12);
+        ctx.fillText(String(digit), digit * 18 + 9, row + 12);
       }
-      this.digitKeys.push(keys);
+      const font = Phaser.GameObjects.RetroFont.Parse(scene, {
+        image: 'damage-digits', width: 18, height: 24, chars: '0123456789',
+        charsPerRow: 10, 'offset.x': 0, 'offset.y': row,
+        'spacing.x': 0, 'spacing.y': 0, lineSpacing: 0,
+      })!;
+      for (const glyph of Object.values((font as unknown as { data: { chars: Record<string, { xAdvance: number }> } }).data.chars)) glyph.xAdvance = 10;
+      scene.cache.bitmapFont.add(this.damageFonts[rowIndex], font);
     }
+    digits.refresh();
   }
 
   draw(run: Run, progress: number) {
@@ -546,7 +552,7 @@ export class Field {
 
   private drawDamage(run: Run, cameraX: number, cameraY: number, progress: number) {
     const numbers = run.damageNumbers;
-    this.damageDigits.begin();
+    let used = 0;
     for (let offset = 0; offset < numbers.count; offset++) {
       const slot = numbers.slot(offset);
       const age = Math.max(0, run.ticks - numbers.born[slot] + progress - 1) / DAMAGE_NUMBER_TICKS;
@@ -554,16 +560,19 @@ export class Field {
       const y = numbers.position[slot * 2 + 1] - cameraY - age * 36;
       if (x < -48 || x > run.viewWidth + 48 || y < -48 || y > run.viewHeight + 48) continue;
       const alpha = Math.min(1, (1 - age) * 2.5);
-      const keys = this.digitKeys[numbers.onHero[slot]];
-      const amount = numbers.amount[slot];
-      let value = amount;
-      let digitX = x + Math.floor(Math.log10(Math.max(1, amount))) * 5;
-      do {
-        this.damageDigits.draw(keys[value % 10], digitX, y, 0, 1, alpha);
-        digitX -= 10;
-        value = Math.floor(value / 10);
-      } while (value > 0);
+      const font = this.damageFonts[numbers.onHero[slot]];
+      let text = this.damageTexts[used];
+      if (!text) {
+        text = this.damageScene.add.bitmapText(0, 0, font, '', 18).setOrigin(.5).setDepth(9);
+        this.damageTexts.push(text);
+      }
+      if (text.font !== font) text.setFont(font, 18);
+      const value = String(numbers.amount[slot]);
+      if (text.text !== value) text.setText(value);
+      text.setPosition(x, y).setAlpha(alpha).setVisible(true);
+      used++;
     }
-    this.damageDigits.end();
+    for (let i = used; i < this.damageTexts.length; i++) this.damageTexts[i].setVisible(false);
+
   }
 }

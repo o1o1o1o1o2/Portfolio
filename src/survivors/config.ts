@@ -13,6 +13,7 @@ export const MAX_SHOTS = 1024;
 export const MAX_DROPS = 4096;
 export const PLAYER_SPEED = 155;
 export const PAID_LEAVE_MOOD_GAIN = 15;
+export const UPGRADE_INVULNERABILITY_SECONDS = 1;
 export const PLAYER_SPEED_PER_LEVEL = PLAYER_SPEED * .25;
 export const INCOMING_DAMAGE_MULTIPLIER = 2;
 export const envelopeConfig = { initialCooldown: .924, cooldownReductionPerLevel: .108 } as const;
@@ -85,7 +86,6 @@ export const crystalScore = { [dropKind.xp]: 10, [dropKind.goldXp]: 100, [dropKi
 export const healingPickups = { coffee: .25, meme: .15 } as const;
 export const pickupPresentation = { healingSize: 38 } as const;
 export const bonusConfig = {
-  invulnerabilitySeconds: 1,
   spawnGapMin: 100, spawnGapMax: 220,
   firstSpawn: 45, spawnEvery: 50, bossDamageFraction: .25, flashSeconds: .3,
   attractionStartSpeed: 400, attractionAcceleration: 1600, attractionMaxSpeed: 2600,
