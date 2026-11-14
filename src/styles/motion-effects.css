@@ -136,11 +136,16 @@ html,body{overflow-x:clip}
   position:absolute; left:48px; top:22%; width:43%; height:380px;
   border-radius:18px; overflow:hidden; background:#24243f; transform:rotate(-3deg);
   box-shadow:0 28px 65px #20243b24;
+  container-type:size;
 }
 .survivor-expansion .expanding-screen::before {
   content:""; position:absolute; inset:-20px;
   background:var(--survivor-cover) center / cover no-repeat;
   filter:blur(20px);
+}
+.survivor-preview-art {
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(100cqw,calc(100cqh * 1836 / 856));aspect-ratio:1836 / 856;
 }
 .survivor-preview-field {
   position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center;
@@ -156,13 +161,13 @@ html,body{overflow-x:clip}
 .survivor-preview-enemy { width:24px; height:24px; border:3px solid #191426; border-radius:5px; background:#ffedce; }
 .survivor-preview-enemy:nth-child(6) { left:19%; top:23%; transform:rotate(-8deg); }
 .survivor-preview-enemy:nth-child(7) { left:76%; top:37%; background:#9a61e8; transform:rotate(9deg); }
-.survivor-preview-launch { position:absolute; left:clamp(18px,3vw,56px); bottom:clamp(18px,4vh,42px); width:max-content; max-width:90%; text-align:left; }
+.survivor-preview-launch { position:absolute; left:3%; bottom:5%; width:max-content; max-width:90%; text-align:left; }
 .survivor-preview-launch .survivor-launch-actions { justify-content:flex-start; }
 .survivor-preview-launch [data-play] {
-  padding:16px 36px; border:2px solid #ffe6af; border-radius:5px;
+  padding:clamp(7px,1.2cqw,16px) clamp(14px,2.7cqw,36px); border:2px solid #ffe6af; border-radius:5px;
   background:linear-gradient(135deg,#ffefc7,#efccf0); color:#321f42;
   box-shadow:5px 5px 0 #b53e80,0 6px 24px #110d2d88;
-  font:800 clamp(18px,2vw,28px)/1.1 system-ui,sans-serif;
+  font:800 clamp(12px,2cqw,28px)/1.1 system-ui,sans-serif;
   letter-spacing:.03em; text-transform:uppercase; transition:transform .15s,box-shadow .15s;
 }
 .survivor-preview-launch [data-play]:hover,

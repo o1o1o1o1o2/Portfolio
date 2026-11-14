@@ -48,6 +48,7 @@ const trailers: Record<string,{video:string;poster:string}> = {
 <main id="main">
   <section class="m-intro m-wrap" data-intro-once><div class="intro-label"><span class="tiny-cross">+</span><span>{t('ui3')}</span></div><h1 data-title="chars">{t('ui4')}<br/>{t('ui78')}</h1><div class="intro-about" data-slide="right"><p>{t('ui5')}</p></div></section>
   <ExperienceStage base={base} lang={lang}/>
+  <TechStack lang={lang}/>
   <section class="m-work m-wrap" id="games" aria-labelledby="work-title"><div class="work-index" data-intro-once><h2 id="work-title" data-title="left">{t('ui7')}</h2><span>{t('ui8')}</span><span>↓</span></div>
     {games.map((game,i)=><article class:list={['motion-project',`project-${game.id}`]}>
       <button class="project-stage" data-case={game.id} aria-label={`${lang === 'ru' ? 'Открыть кейс' : 'Open case'} ${game.title}`}>
@@ -59,7 +60,6 @@ const trailers: Record<string,{video:string;poster:string}> = {
       <div class="project-description"><div class="project-caption"><svg class="project-caption-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h19M13 4l8 8-8 8"/></svg><h3 class="project-name"><span data-title="slot">{game.title}</span></h3></div><p data-typewriter>{game.summary[lang]}</p></div>
     </article>)}
   </section>
-  <TechStack lang={lang}/>
   <section class="m-engineering" id="backend"><div class="m-wrap"><div class="engineering-heading"><span class="tiny-cross">+</span><span class="m-eyebrow">BEYOND GAMEPLAY / 02</span><h2 data-title="chars">{t('ui12')}<br/><em>{t('ui13')}</em></h2><p data-slide="right">{t('ui14')}<br/>{t('ui15')}</p></div><div class="engineering-content"><div class="engineering-copy" data-slide="left"><span class="m-eyebrow">{t('ui16')}</span><h3>HomeAlone<span>↗</span></h3><p>{backend.summary[lang]}</p><div class="engineering-tags">{[...backend.stack, ...backend.plannedStack].map(tag=><span>{tag}</span>)}</div></div><div class="system-panel" data-slide="right"><div class="system-top"><span>{t('ui19')}</span><span class="pulse-dot"></span></div><div class="system-flow"><div class="system-block"><strong>{t('requestApiDetail')}</strong></div><span class="flow-connector">↓</span><div class="system-block active"><strong>{t('requestServiceDetail')}</strong><div class="signal"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="flow-connector">↓</span><div class="system-block"><small>{t('ui22')}</small><strong>{t('requestStorageDetail')}</strong></div></div><div class="system-bottom">{t('ui23')}</div></div></div></div></section>
   <section class="m-articles m-wrap" id="articles"><div class="articles-heading"><span class="m-eyebrow">{t('ui24')}</span><h2 data-title="mixed">{t('ui25')}<br/><em>{t('ui26')}</em></h2></div><a class="motion-article" href={portfolio.articles[0].url} target="_blank" rel="noopener noreferrer"><div class="article-art" aria-hidden="true"><span class="article-wire">▧</span><span>VOXEL<br/>RENDERING</span><small>CPU → GPU / UNITY</small></div><div class="motion-article-copy"><span class="m-eyebrow">{t('ui27')}</span><h3 data-title="chars">{portfolio.articles[0].title.ru}</h3><span class="article-read">{t('ui28')}<span>↗</span></span></div></a></section>
   <section class="m-profile m-wrap" id="profile" aria-labelledby="profile-title" data-row-reveal="up">
@@ -86,8 +86,10 @@ const trailers: Record<string,{video:string;poster:string}> = {
         </button>
       </div>
       <div class="expanding-screen" data-expanding-screen style={`--survivor-cover: url('${base}/images/hr-survivors-cover-wide.png')`}>
-        <img class="survivor-preview-field" src={`${base}/images/hr-survivors-cover-wide.png`} alt="" loading="lazy" width="1836" height="856" />
-        <div class="survivor-preview-launch"><GameLauncher lang={lang}/></div>
+        <div class="survivor-preview-art">
+          <img class="survivor-preview-field" src={`${base}/images/hr-survivors-cover-wide.png`} alt="" loading="lazy" width="1836" height="856" />
+          <div class="survivor-preview-launch"><GameLauncher lang={lang}/></div>
+        </div>
       </div>
     </div>
   </section>
